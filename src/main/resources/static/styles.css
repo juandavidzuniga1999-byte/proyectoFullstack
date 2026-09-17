@@ -1,0 +1,601 @@
+/*------- CONFIGURACION GENERAL --------*/
+:root{
+    --blanco:#F3EFE7;
+    --naranjoso:#b6791d;
+    --negro:#080808;
+}
+body{
+    margin:0;
+    background:var(--negro);
+    color:var(--blanco);
+    font-family:'Inter', sans-serif;
+    line-height:1.55;
+}
+a{color:inherit;}
+.wrap{max-width:1240px; margin:0 auto; padding:0 32px;}
+section{padding:110px 0;}
+
+.logo{font-family:'Cormorant Garamond', serif; font-weight:600; font-size:1.6rem; letter-spacing:0.02em; color:#F3EFE7}
+
+/* ------- NAV -------- */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--negro);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 15px;
+    max-width: 1980px;
+    margin: 0 auto;
+}
+
+.nav-izquierda {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+}
+
+.nav-links a {
+    color: var(--blanco);
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 4px;
+}
+
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 1px;
+    background: var(--blanco);
+    transition: width 0.25s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.burger span {
+    width: 24px;
+    height: 2px;
+    background: var(--blanco);
+}
+
+.social-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--negro);
+  padding: 15px 30px;
+}
+.social-icons {
+  display: flex;
+  gap: 15px;
+}
+.social-icons a {
+  color: var(--blanco);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.3);
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+.social-icons a:hover {
+  background-color: rgba(255,255,255,0.15);
+}
+
+/* ------- CELULAR -------- */
+
+@media (max-width: 860px) {
+
+    nav {
+        position: relative;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+
+        background: var(--negro);
+
+        list-style: none;
+
+        max-height: 0;
+        overflow: hidden;
+
+        transition: max-height 0.3s ease;
+
+        z-index: 100;
+    }
+
+    .nav-links.open {
+        max-height: 300px;
+    }
+
+    .nav-links li {
+        width: 100%;
+        border-top: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .nav-links a {
+        display: block;
+        width: 100%;
+        padding: 16px 32px;
+        box-sizing: border-box;
+    }
+
+    .nav-links a::after {
+        display: none;
+    }
+
+    .social-icons {
+        display: none;
+    }
+
+    .burger {
+        display: flex;
+    }
+}
+
+/*----  DISPLAY GRANDE  ------*/
+.displayPrincipal{
+  position:relative;
+    height:88vh; min-height:560px;
+    display:flex; align-items:flex-end;
+    color:var(--negro);
+}
+.displayPrincipal .layer1{
+  position:absolute;
+  inset:0;
+  background-image: url('images/casa3.jpg');
+  background-size: cover;
+  background-position: center 40%;
+  background-repeat: no-repeat;
+}
+.display-content .img{
+  width: 400px;
+  height: 300px;
+}
+.displayPrincipal .layer1::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* ajusta el 0.5 para más o menos oscuridad */
+  z-index: 1;
+}
+.display-content{
+    position:center; 
+    z-index:2; 
+    padding:0 32px 72px; 
+    max-width:450px; 
+    margin:0 auto; 
+    width:100%;
+    text-align: center;
+  }
+.display-content h1{
+    font-size:clamp(2.6rem,5vw,4.2rem);
+    color:var(--blanco);
+    line-height:1.05;
+    max-width:14ch;
+    position: center;
+  }
+.display-content p.lead{max-width:46ch; color:rgba(251,249,244,0.85); font-size:1.5rem;}
+
+/*------- Mision -------*/
+.section-head{max-width:1000px; margin-bottom:100px;margin:0 auto;margin-top: 100px;}
+.section-head h2{font-size: 2rem;}
+.section-head p{color:var(--cream); font-size:1.2rem;}
+
+/*-------- Servicios ------*/
+.servicios{
+  display:flex;
+  width:100%;
+  height:620px;
+}
+.servicio{
+  flex:1;
+  position: center;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+}
+.servicio-nombre{
+  position: center;
+  z-index: 2;
+  color: #080808;
+  font-weight: bold;
+  font-size: 18px;
+  letter-spacing: 1px;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+}
+
+
+@media (max-width: 768px) {
+  .servicios {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    height: auto;
+    gap: 2px;
+  }
+
+  .servicio {
+    height: 200px;
+  }
+}
+
+/*------- Nosotros ------*/
+  .about{max-width:1260px; margin-bottom:100px;margin:0 auto;}
+  .about p{color:var(--blanco); font-size:1.02rem; max-width:52ch;}
+  .stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--blanco); 
+  border: 2px solid var(--blanco);
+  margin-bottom: 100px;
+  max-width: 400px; 
+}
+.stat {
+  background: var(--negro);
+  padding: 16px 14px; 
+}
+.stat .num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.1rem;
+  color: var(--blanco);
+  font-weight: 600;
+  display: block;
+}
+.stat .label {
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--blanco);
+}
+.about-media {
+  aspect-ratio: 4/5;
+}
+
+@media (max-width:768px){
+  .stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--blanco); 
+  border: 2px solid var(--blanco);
+  margin-bottom: 100px;
+  max-width: 300px; 
+}
+}
+
+/*-------- Contacto --------*/
+.contactos {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--negro); 
+  margin-top: 32px;
+  max-width: 400px; 
+}
+.contacto {
+  background: var(--negro);
+  padding: 26px 14px; 
+}
+.contacto .fuente {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  color: var(--blanco);
+  font-weight: 600;
+  display: block;
+}
+.contacto .texto{
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--blanco);
+}
+
+
+/* ------ footer -------*/
+.cta-strip{
+    background:var(--blanco); color:var(--blanco); text-align:center; padding:90px 32px;
+  }
+  .cta-strip h2{color:var(--cream); font-size:clamp(1.8rem,3vw,2.6rem); max-width:18ch; margin:0 auto 20px;}
+  footer{border-top:1px solid var(--blanco); padding:56px 0 30px; font-size:0.85rem; color:var(--blanco);}
+  .footer-grid{display:grid; grid-template-columns:2fr 1fr 1fr; gap:40px; margin-bottom:40px;}
+  @media (max-width:760px){ .footer-grid{grid-template-columns:1fr; gap:28px;} }
+  .footer-grid h4{font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--charcoal); margin-bottom:14px;}
+  .footer-grid ul{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px;}
+  .footer-grid a{text-decoration:none;}
+  .footer-grid a:hover{color:var(--blanco);}
+  .footer-bottom{border-top:1px solid var(--blanco); padding-top:22px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+  :focus-visible{outline:2px solid var(--clay); outline-offset:2px;}
+
+
+  /* ----- seccion de galeria --------*/
+.galeria {
+background: var(--negro);
+padding: 80px 60px;
+}
+
+.galeria-titulo {
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--blanco);
+  font-size: 2.2rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.galeria-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+  gap: 16px;
+}
+
+.galeria-item {
+  overflow: hidden;
+  aspect-ratio: 4/3; /* mantiene proporción uniforme en todas las fotos */
+}
+
+.galeria-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+/* Efecto zoom suave al pasar el mouse */
+.galeria-item:hover img {
+  transform: scale(1.08);
+}
+
+
+/*----------------- Display chico -----------------------*/
+.displayChico{
+  position:relative;
+    height:44vh; min-height:560px;
+    display:flex; align-items:flex-end;
+    color:var(--negro);
+    background-size: cover;
+}
+@media(max-width:760px){
+.displayChico{
+  position:relative;
+    height:44vh; min-height:150px;
+    display:flex; align-items:flex-end;
+    color:var(--negro);
+}
+}
+.displayChico .layer1{
+  position:absolute;
+  inset:0;
+  background-size: cover;
+  background-position: center 40%;
+  background-repeat: no-repeat;
+}
+.displayChico .layer1::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* ajusta el 0.5 para más o menos oscuridad */
+  z-index: 1;
+}
+
+/* ------- para que la galeria muestre un acercamiento a la foto */
+.lightbox {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox.activo {
+  display: flex;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 85vh;
+  object-fit: contain;
+}
+
+.lightbox-cerrar {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.galeria-item img {
+  cursor: pointer; /* para que se vea clicable */
+}
+
+
+/* seccion del carrusel */
+.carrusel-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 60px 40px 40px;
+}
+
+/* NUEVO: la "ventana" que recorta las tarjetas que no se ven */
+.carrusel-viewport {
+  width: 1000px;       /* ancho visible del carrusel, ajústalo a tu gusto */
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.carrusel-track {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  transition: transform 0.5s ease; /* CLAVE: aquí ocurre la animación */
+}
+
+.carrusel-card {
+  flex: 0 0 340px;   /* ancho fijo, no se encoge ni se estira */
+  height: 420px;
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  opacity: 0.5;
+  transform: scale(0.85);
+  transition: opacity 0.5s ease, transform 0.5s ease; /* anima también el "resaltado" */
+}
+
+.carrusel-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carrusel-card.destacada {
+  opacity: 1;
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+}
+
+.carrusel-card.destacada img {
+  filter: brightness(0.6);
+}
+
+.carrusel-overlay {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.2s; /* aparece un poco después del movimiento */
+}
+
+.carrusel-card.destacada .carrusel-overlay {
+  opacity: 1;
+}
+
+.carrusel-subtitulo {
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  opacity: 0.85;
+}
+
+.carrusel-titulo {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+.carrusel-flecha {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #333;
+  cursor: pointer;
+  padding: 10px;
+  flex-shrink: 0;
+}
+
+.carrusel-puntos {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.carrusel-puntos span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ccc;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.carrusel-puntos span.activo {
+  background: #333;
+}
+.mostrador{
+   display:flex;
+  width:100%;
+  height:620px;
+}
+.propiedad{
+  flex:1;
+  position: center;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+}

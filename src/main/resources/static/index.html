@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviciois Guardado — Espacios que sí se sienten tuyos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <div class="nav-izquierda">
+                <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+
+                <div class="social-icons">
+                 <a href="https://facebook.com/" target="_blank" aria-label="Facebook">
+                 <i class="fab fa-facebook-f"></i>
+                 </a>
+                <a href="https://twitter.com/" target="_blank" aria-label="Twitter">  <!-- modificar a la empresa  -->
+                 <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://instagram.com/" target="_blank" aria-label="Instagram">
+                 <i class="fab fa-instagram"></i>
+                </a>
+                <a href="mailto:contacto@tuempresa.com" aria-label="Correo">
+                <i class="fas fa-envelope"></i>
+                </a>
+                </div>
+
+        <button class="burger" id="burgerBtn" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        </nav>
+    </header>
+
+    <body>
+        <section id="inicio" class="displayPrincipal">
+                <div class="layer1"></div>
+                <div class="display-content">
+                  <img src="images/logotopga.png" class="display-content">
+                <h1>SERVICIOS GUARDADO</h1>
+                <p class="lead">Inmoviliaria y servicios diversos</p>
+                </div>
+        </section>
+
+        <section id="mision" class="wrap">
+                <div class="section-head">
+                <h2>Hacemos de tu imaginacion una realidad</h2>
+                <p>Nuestra misión es desarrollar proyectos inmobiliarios que maravillen a nuestros clientes. 
+                Siempre enfocados en las necesidades y gustos de nuestros clientes, orientandolos y construyendo 
+                el camino a su hogar ideal.
+                </p>
+                </div>
+         </section>
+
+        <section id="servicios">
+      <h1>Nuestros servicios</h1>
+      <div class="servicios">
+        <a href="stone.html" class="servicio" style="background-image: url('images/marmol.jpg');" >
+            <span class="servicio-nombre">STONE</span>
+        </a>
+        <a href="serviciosMov.html" class="servicio" style="background-image: url('images/casa2.jpg');">
+            <span class="servicio-nombre">Servicios Inmoviliarios</span>
+        </a>
+        <a href="greengarden.html" class="servicio" style="background-image: url('images/green.jpg');">
+            <span class="servicio-nombre">Green garden</span>
+        </a>
+        <a href="boulevardStone.html" class="servicio" style="background-image: url('images/marmol.jpg');">
+            <span class="servicio-nombre">Boulevard Stonewall</span>
+        </a>
+        <a href="deck.html" class="servicio" style="background-image: url('images/marmol.jpg');">
+            <span class="servicio-nombre">deck</span>
+        </a>
+     </div>
+    </section>
+
+        <section id="nosotros" class="wrap">
+        <div class="about">
+        <h1>Construimos confianza antes que cerrar tratos</h1>
+        <p>Somos un equipo con el compromiso con nuestros clientes de mejorar su 
+            hogar y brindarles seguridad, compromiso para poder hacer realidad sus proyectos.</p>
+        </div>
+        <div class="stats">
+          <div class="stat"><span class="num">14</span><span class="label">Años de experiencia</span></div>
+          <div class="stat"><span class="num">67</span><span class="label">Propiedades colocadas</span></div>
+        </div>
+        </section>
+
+        <section id="galeria" class="galeria">
+        <h2 class="galeria-titulo">Nuestros Proyectos</h2>
+
+         <div class="galeria-grid">
+         <div class="galeria-item">
+         <img src="images/casa1.jpg" alt="Proyecto 1" onclick="abrirLightbox(this)">
+    </div>
+    <div class="galeria-item">
+      <img src="images/casa1.jpg" alt="Proyecto 2" onclick="abrirLightbox(this)">
+    </div>
+    <div class="galeria-item">
+      <img src="images/casa1.jpg" alt="Proyecto 3" onclick="abrirLightbox(this)">
+    </div>
+    <div class="galeria-item">
+      <img src="images/casa1.jpg" alt="Proyecto 4" onclick="abrirLightbox(this)">
+    </div>
+    <div class="galeria-item">
+      <img src="images/casa1.jpg" alt="Proyecto 5" onclick="abrirLightbox(this)">
+    </div>
+    <div class="galeria-item">
+      <img src="images/casa1.jpg" alt="Proyecto 6" onclick="abrirLightbox(this)">
+    </div>
+  </div>
+
+   <div class="lightbox" id="lightbox">
+  <span class="lightbox-cerrar" onclick="cerrarLightbox()">&times;</span>
+  <img id="lightbox-img" src="" alt="">
+</div>
+    </section>
+
+   
+
+
+        <section id="contacto" class="wrap">
+            <div class="about">
+                <h2>Contacto</h2>
+                <p>Ponte en contacto con nosotros, estamos a tu disposicion</p>
+                <div class="contactos">
+                    <div class="contacto"><span class="fuente">Oficina</span><span class="texto">Plaza Palmas</span></div>
+                    <div class="contacto"><span class="fuente">Telefono</span><span class="texto">+52 833 67420</span></div>
+                    <div class="contacto"><span class="fuente">Correo</span><span class="texto">serviciosguardado@gmail.com</span></div>
+                    <div class="contacto"><span class="fuente">Horario</span><span class="texto">Lunes a viernes 10:00AM-2:00PM</span></div>
+                </div>
+            </div>
+        </section>
+
+        
+
+
+    </body>
+
+    <footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="logo" style="margin-bottom:12px;">Servicios Guardado</div>
+        <p style="max-width:38ch;">Servicios inmoviliarios </p>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <ul><li><a href="#contacto">Escríbenos</a></li><li>+52 833 000 0000</li><li>contacto@stone.mx</li></ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Servicios Guardado. Todos los derechos reservados.</span>
+      <span>Aviso de privacidad</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+
+</html>
