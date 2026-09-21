@@ -1,8 +1,21 @@
 package com.guardado.proyecto.model;
 
-public class Propiedad {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "propiedades")
+
+public class propiedad {
+ 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String titulo;
+    private String imagenUrl;
     private String tipoPropiedad;
     private int terreno;
     private int construccion;
@@ -14,97 +27,116 @@ public class Propiedad {
     private String ubicacion;
     private String descripcion;
     private int precio;
-
-public int getId() {
-    return id;
-}
-
-public void setId(int id) {
-    this.id = id;
-}
-
-public String getTipoPropiedad() {
-    return tipoPropiedad;
-}
-
-public void setTipoPropiedad(String tipoPropiedad) {
-    this.tipoPropiedad = tipoPropiedad;
-}
-
-public int getTerreno() {
-    return terreno;
-}
-
-public void setTerreno(int terreno) {
-    this.terreno = terreno;
-}
-
-public int getConstruccion() {
-    return construccion;
-}
-
-public void setConstruccion(int construccion) {
-    this.construccion = construccion;
-}
-
-public int getBanos() {
-    return banos;
-}
-
-public void setBanos(int banos) {
-    this.banos = banos;
-}
-
-public int getMedioBano() {
-    return medioBano;
-}
-
-public void setMedioBano(int medioBano) {
-    this.medioBano = medioBano;
-}
-
-public int getEstacionamiento() {
-    return estacionamiento;
-}
-
-public void setEstacionamiento(int estacionamiento) {
-    this.estacionamiento = estacionamiento;
-}
-
-public int getCuarto() {
-    return cuarto;
-}
-
-public void setCuarto(int cuarto) {
-    this.cuarto = cuarto;
-}
-
-public String getCondicion() {
-    return condicion;
-}
-
-public void setCondicion(String condicion) {
-    this.condicion = condicion;
-}
-
-public String getUbicacion() {
-    return ubicacion;
-}
-public void setUbicacion(String ubicacion) {
-    this.ubicacion = ubicacion;
-}
-
-public String getDescripcion() {
-    return descripcion;
-}
-public void setDescripcion(String descripcion) {
-    this.descripcion = descripcion;
-}
-
-public int getPrecio() {
-    return precio;
-}
-public void setPrecio(int precio) {
-    this.precio = precio;
-}
+ 
+    public int getId() {
+        return id;
+    }
+ 
+    public void setId(int id) {
+        this.id = id;
+    }
+ 
+    public String getTitulo() {
+        return titulo;
+    }
+ 
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+ 
+    public String getImagenUrl() {
+        return imagenUrl;
+    }
+ 
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
+    }
+ 
+    public String getTipoPropiedad() {
+        return tipoPropiedad;
+    }
+ 
+    public void setTipoPropiedad(String tipoPropiedad) {
+        this.tipoPropiedad = tipoPropiedad;
+    }
+ 
+    public int getTerreno() {
+        return terreno;
+    }
+ 
+    public void setTerreno(int terreno) {
+        this.terreno = terreno;
+    }
+ 
+    public int getConstruccion() {
+        return construccion;
+    }
+ 
+    public void setConstruccion(int construccion) {
+        this.construccion = construccion;
+    }
+ 
+    public int getBanos() {
+        return banos;
+    }
+ 
+    public void setBanos(int banos) {
+        this.banos = banos;
+    }
+ 
+    public int getMedioBano() {
+        return medioBano;
+    }
+ 
+    public void setMedioBano(int medioBano) {
+        this.medioBano = medioBano;
+    }
+ 
+    public int getEstacionamiento() {
+        return estacionamiento;
+    }
+ 
+    public void setEstacionamiento(int estacionamiento) {
+        this.estacionamiento = estacionamiento;
+    }
+ 
+    public int getCuarto() {
+        return cuarto;
+    }
+ 
+    public void setCuarto(int cuarto) {
+        this.cuarto = cuarto;
+    }
+ 
+    public String getCondicion() {
+        return condicion;
+    }
+ 
+    public void setCondicion(String condicion) {
+        this.condicion = condicion;
+    }
+ 
+    public String getUbicacion() {
+        return ubicacion;
+    }
+ 
+    public void setUbicacion(String ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+ 
+    public String getDescripcion() {
+        return descripcion;
+    }
+ 
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+ 
+    public int getPrecio() {
+        return precio;
+    }
+ 
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
 }
