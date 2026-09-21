@@ -123,3 +123,55 @@ crearCarrusel();
 
 // Recalcula la posición si cambia el tamaño de la ventana
 window.addEventListener('resize', actualizarCarrusel);
+
+
+// ---- PROPIEDADES DESDE LA BASE DE DATOS ----
+// Pinta las tarjetas en #propiedadesGrid llamando a /api/propiedades
+function formatearPrecio(valor) {
+  return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(valor);
+}
+ 
+async function cargarPropiedades() {
+  const grid = document.getElementById('propiedadesGrid');
+  const estado = document.getElementById('propiedadesEstado');
+  if (!grid) return; // esta pagina no tiene el apartado de propiedades
+ 
+  try {
+    const respuesta = await fetch('/api/propiedades');
+    if (!respuesta.ok) throw new Error('Respuesta no OK: ' + respuesta.status);
+ 
+    const propiedades = await respuesta.json();
+ 
+    if (!propiedades.length) {
+      if (estado) estado.textContent = 'Aún no hay propiedades cargadas.';
+      return;
+    }
+ 
+    grid.innerHTML = ''; // limpia el "Cargando..."
+ 
+    propiedades.forEach((p) => {
+      const card = document.createElement('div');
+      card.className = 'propiedad-card';
+ 
+      card.innerHTML = `
+        <div class="propiedad-imagen" style="background-image:url('${p.imagenUrl || 'images/casa1.jpg'}')"></div>
+        <div class="propiedad-info">
+          <h3 class="propiedad-titulo">${p.titulo || p.tipoPropiedad || 'Propiedad'}</h3>
+          <div class="propiedad-datos">
+            <span>Construcción: ${p.construccion ?? '-'} m²</span>
+            <span>Terreno: ${p.terreno ?? '-'} m²</span>
+          </div>
+          <span class="propiedad-condicion">${p.condicion || ''}</span>
+          <span class="propiedad-precio">${formatearPrecio(p.precio || 0)}</span>
+        </div>
+      `;
+ 
+      grid.appendChild(card);
+    });
+  } catch (error) {
+    console.error('No se pudieron cargar las propiedades:', error);
+    if (estado) estado.textContent = 'No se pudieron cargar las propiedades. Intenta más tarde.';
+  }
+}
+ 
+cargarPropiedades();

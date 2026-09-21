@@ -599,3 +599,77 @@ padding: 80px 60px;
   text-decoration: none;
   color: inherit;
 }
+
+
+/* ----------------- Propiedades (desde la base de datos) ----------------- */
+.propiedades-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.propiedades-estado {
+  color: var(--blanco);
+  opacity: 0.7;
+  text-align: center;
+  grid-column: 1 / -1;
+}
+
+.propiedad-card {
+  background: #111;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.propiedad-card:hover {
+  transform: translateY(-4px);
+}
+
+.propiedad-imagen {
+  height: 190px;
+  background-size: cover;
+  background-position: center;
+}
+
+.propiedad-info {
+  padding: 18px 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.propiedad-titulo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--blanco);
+  margin: 0 0 4px;
+}
+
+.propiedad-datos {
+  display: flex;
+  gap: 14px;
+  font-size: 0.82rem;
+  color: rgba(243,239,231,0.7);
+  flex-wrap: wrap;
+}
+
+.propiedad-condicion {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--naranjoso);
+  margin-top: 6px;
+}
+
+.propiedad-precio {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--blanco);
+  margin-top: 4px;
+}
