@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.guardado.proyecto.model.propiedad;
+import com.guardado.proyecto.model.Propiedad;
 import com.guardado.proyecto.repository.propiedadRepository;
 
 @RestController
@@ -27,13 +27,13 @@ public class propiedadController {
     // GET /api/propiedades -> lista todas las propiedades (esto es lo que
     // consume serviciosMov.html)
     @GetMapping
-    public List<propiedad> listar() {
+    public List<Propiedad> listar() {
         return propiedadRepository.findAll();
     }
 
     // GET /api/propiedades/5 -> una sola propiedad
     @GetMapping("/{id}")
-    public ResponseEntity<propiedad> obtener(@PathVariable int id) {
+    public ResponseEntity<Propiedad> obtener(@PathVariable int id) {
         return propiedadRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -41,17 +41,17 @@ public class propiedadController {
 
     // POST /api/propiedades -> crea una propiedad nueva
     @PostMapping
-    public ResponseEntity<propiedad> crear(@RequestBody propiedad propiedad) {
-        propiedad guardada = propiedadRepository.save(propiedad);
+    public ResponseEntity<Propiedad> crear(@RequestBody Propiedad propiedad) {
+        Propiedad guardada = propiedadRepository.save(propiedad);
         return ResponseEntity.status(HttpStatus.CREATED).body(guardada);
     }
 
     // PUT /api/propiedades/5 -> actualiza una propiedad existente
     @PutMapping("/{id}")
-    public ResponseEntity<propiedad> actualizar(@PathVariable int id, @RequestBody propiedad datos) {
+    public ResponseEntity<Propiedad> actualizar(@PathVariable int id, @RequestBody Propiedad datos) {
         return propiedadRepository.findById(id).map(existente -> {
             datos.setId(id);
-            propiedad actualizada = propiedadRepository.save(datos);
+            Propiedad actualizada = propiedadRepository.save(datos);
             return ResponseEntity.ok(actualizada);
         }).orElse(ResponseEntity.notFound().build());
     }

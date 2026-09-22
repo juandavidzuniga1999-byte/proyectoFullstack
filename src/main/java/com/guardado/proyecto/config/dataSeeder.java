@@ -4,7 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
  
-import com.guardado.proyecto.model.propiedad;
+import com.guardado.proyecto.model.Propiedad;
 import com.guardado.proyecto.repository.propiedadRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class dataSeeder {
     public CommandLineRunner sembrarDatos(propiedadRepository repo) {
         return args -> {
             if (repo.count() == 0) {
-                propiedad p1 = new propiedad();
+                Propiedad p1 = new Propiedad();
                 p1.setTitulo("Casa en Venta Fracc. Villas de Altamira");
                 p1.setImagenUrl("images/casa1.jpg");
                 p1.setImagenes(List.of("images/casa1.jpg", "images/casa2.jpg", "images/marmol.jpg"));
@@ -32,7 +32,7 @@ public class dataSeeder {
                 p1.setPrecio(1150000);
                 repo.save(p1);
 
-                propiedad p2 = new propiedad();
+                Propiedad p2 = new Propiedad();
                 p2.setTitulo("Casa en Venta Col. Tamaulipas, Altamira");
                 p2.setImagenUrl("images/marmol.jpg");
                 p2.setImagenes(List.of("images/marmol.jpg", "images/casa1.jpg"));
@@ -44,7 +44,7 @@ public class dataSeeder {
                 p2.setPrecio(767880);
                 repo.save(p2);
 
-                propiedad p3 = new propiedad();
+                Propiedad p3 = new Propiedad();
                 p3.setTitulo("Casa en Venta Fracc. Santa Elena, Altamira");
                 p3.setImagenUrl("images/casa2.jpg");
                 p3.setImagenes(List.of("images/casa2.jpg", "images/casa1.jpg", "images/green.jpg"));
