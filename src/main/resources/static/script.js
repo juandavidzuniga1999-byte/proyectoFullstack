@@ -150,24 +150,27 @@ async function cargarPropiedades() {
     grid.innerHTML = ''; // limpia el "Cargando..."
  
     propiedades.forEach((p) => {
-      const card = document.createElement('div');
-      card.className = 'propiedad-card';
- 
-      card.innerHTML = `
-        <div class="propiedad-imagen" style="background-image:url('${p.imagenUrl || 'images/casa1.jpg'}')"></div>
-        <div class="propiedad-info">
-          <h3 class="propiedad-titulo">${p.titulo || p.tipoPropiedad || 'Propiedad'}</h3>
-          <div class="propiedad-datos">
-            <span>Construcción: ${p.construccion ?? '-'} m²</span>
-            <span>Terreno: ${p.terreno ?? '-'} m²</span>
-          </div>
-          <span class="propiedad-condicion">${p.condicion || ''}</span>
-          <span class="propiedad-precio">${formatearPrecio(p.precio || 0)}</span>
-        </div>
-      `;
- 
-      grid.appendChild(card);
-    });
+  const card = document.createElement('div');
+  card.className = 'propiedad-card';
+
+  card.innerHTML = `
+    <div class="propiedad-imagen" style="background-image:url('${p.imagenUrl || 'images/casa1.jpg'}')"></div>
+    <div class="propiedad-info">
+      <h3 class="propiedad-titulo">${p.titulo || p.tipoPropiedad || 'Propiedad'}</h3>
+      <div class="propiedad-datos">
+        <span>Construcción: ${p.construccion ?? '-'} m²</span>
+        <span>Terreno: ${p.terreno ?? '-'} m²</span>
+      </div>
+      <span class="propiedad-condicion">${p.condicion || ''}</span>
+      <span class="propiedad-precio">${formatearPrecio(p.precio || 0)}</span>
+    </div>
+  `;
+
+  card.style.cursor = 'pointer';
+  card.onclick = () => { window.location.href = `propiedad.html?id=${p.id}`; };
+
+  grid.appendChild(card);
+});
   } catch (error) {
     console.error('No se pudieron cargar las propiedades:', error);
     if (estado) estado.textContent = 'No se pudieron cargar las propiedades. Intenta más tarde.';
@@ -175,3 +178,80 @@ async function cargarPropiedades() {
 }
  
 cargarPropiedades();
+
+
+// ---- GALERÍA DE FOTOS DE UNA PROPIEDAD (propiedad.html) ----
+let fotosPropiedadActual = [];
+let indiceFotoActual = 0;
+
+function obtenerIdDeUrl() {
+  return new URLSearchParams(window.location.search).get('id');
+}
+
+function mostrarFotoActual() {
+  const fotoPrincipal = document.getElementById('fotoPrincipal');
+  if (!fotoPrincipal || !fotosPropiedadActual.length) return;
+  fotoPrincipal.src = fotosPropiedadActual[indiceFotoActual];
+  document.querySelectorAll('.miniatura').forEach((mini, i) => {
+    mini.classList.toggle('activa', i === indiceFotoActual);
+  });
+}
+
+function cambiarFoto(direccion) {
+  if (!fotosPropiedadActual.length) return;
+  indiceFotoActual = (indiceFotoActual + direccion + fotosPropiedadActual.length) % fotosPropiedadActual.length;
+  mostrarFotoActual();
+}
+
+async function cargarDetallePropiedad() {
+  const fotoPrincipal = document.getElementById('fotoPrincipal');
+  if (!fotoPrincipal) return; // no estamos en propiedad.html
+
+  const id = obtenerIdDeUrl();
+  const titulo = document.getElementById('tituloPropiedad');
+  if (!id) {
+    titulo.textContent = 'Propiedad no especificada';
+    return;
+  }
+
+  try {
+    const respuesta = await fetch(`/api/propiedades/${id}`);
+    if (!respuesta.ok) throw new Error('No encontrada');
+    const p = await respuesta.json();
+
+    fotosPropiedadActual = (p.imagenes && p.imagenes.length) ? p.imagenes : [p.imagenUrl || 'images/casa1.jpg'];
+    indiceFotoActual = 0;
+    mostrarFotoActual();
+
+    const miniaturas = document.getElementById('miniaturasPropiedad');
+    miniaturas.innerHTML = '';
+    fotosPropiedadActual.forEach((url, i) => {
+      const mini = document.createElement('img');
+      mini.src = url;
+      mini.className = 'miniatura' + (i === 0 ? ' activa' : '');
+      mini.onclick = () => { indiceFotoActual = i; mostrarFotoActual(); };
+      miniaturas.appendChild(mini);
+    });
+
+    titulo.textContent = p.titulo || p.tipoPropiedad || 'Propiedad';
+    document.getElementById('precioPropiedad').textContent = formatearPrecio(p.precio || 0);
+
+    const etiquetas = document.getElementById('etiquetasPropiedad');
+    etiquetas.innerHTML = '';
+    
+
+    document.getElementById('datosPropiedad').innerHTML = `
+      <div class="dato"><span class="dato-num">${p.construccion ?? '-'}</span><span class="dato-label">m² Construcción</span></div>
+      <div class="dato"><span class="dato-num">${p.terreno ?? '-'}</span><span class="dato-label">m² Terreno</span></div>
+      <div class="dato"><span class="dato-num">${p.cuarto ?? '-'}</span><span class="dato-label">Recámaras</span></div>
+      <div class="dato"><span class="dato-num">${p.banos ?? '-'}</span><span class="dato-label">Baños</span></div>
+      <div class="dato"><span class="dato-num">${p.estacionamiento ?? '-'}</span><span class="dato-label">Estacionamiento</span></div>
+      ${p.descripcion ? `<p class="detalle-descripcion">${p.descripcion}</p>` : ''}
+    `;
+  } catch (error) {
+    console.error('No se pudo cargar la propiedad:', error);
+    titulo.textContent = 'No se pudo cargar la propiedad';
+  }
+}
+
+cargarDetallePropiedad();

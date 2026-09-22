@@ -1,10 +1,18 @@
 package com.guardado.proyecto.model;
 
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OrderColumn;
 import jakarta.persistence.Table;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "propiedades")
@@ -15,7 +23,7 @@ public class propiedad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String titulo;
-    private String imagenUrl;
+    private String imagenUrl; 
     private String tipoPropiedad;
     private int terreno;
     private int construccion;
@@ -27,6 +35,13 @@ public class propiedad {
     private String ubicacion;
     private String descripcion;
     private int precio;
+
+    
+    @ElementCollection
+    @CollectionTable(name = "propiedad_imagenes", joinColumns = @JoinColumn(name = "propiedad_id"))
+    @OrderColumn(name = "posicion")
+    @Column(name = "url")
+    private List<String> imagenes = new ArrayList<>();
  
     public int getId() {
         return id;
@@ -139,4 +154,13 @@ public class propiedad {
     public void setPrecio(int precio) {
         this.precio = precio;
     }
+
+    public List<String> getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(List<String> imagenes) {
+        this.imagenes = imagenes;
+    }
+
 }

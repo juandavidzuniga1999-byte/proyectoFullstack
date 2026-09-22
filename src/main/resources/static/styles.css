@@ -484,7 +484,7 @@ padding: 80px 60px;
 
 /* NUEVO: la "ventana" que recorta las tarjetas que no se ven */
 .carrusel-viewport {
-  width: 1000px;       /* ancho visible del carrusel, ajústalo a tu gusto */
+  width: 1000px;       
   max-width: 100%;
   overflow: hidden;
 }
@@ -493,18 +493,18 @@ padding: 80px 60px;
   display: flex;
   align-items: center;
   gap: 24px;
-  transition: transform 0.5s ease; /* CLAVE: aquí ocurre la animación */
+  transition: transform 0.5s ease; 
 }
 
 .carrusel-card {
-  flex: 0 0 340px;   /* ancho fijo, no se encoge ni se estira */
+  flex: 0 0 340px;   
   height: 420px;
   position: relative;
   border-radius: 6px;
   overflow: hidden;
   opacity: 0.5;
   transform: scale(0.85);
-  transition: opacity 0.5s ease, transform 0.5s ease; /* anima también el "resaltado" */
+  transition: opacity 0.5s ease, transform 0.5s ease; 
 }
 
 .carrusel-card img {
@@ -532,7 +532,7 @@ padding: 80px 60px;
   text-align: center;
   color: white;
   opacity: 0;
-  transition: opacity 0.3s ease 0.2s; /* aparece un poco después del movimiento */
+  transition: opacity 0.3s ease 0.2s; 
 }
 
 .carrusel-card.destacada .carrusel-overlay {
@@ -601,7 +601,7 @@ padding: 80px 60px;
 }
 
 
-/* ----------------- Propiedades (desde la base de datos) ----------------- */
+/* ----------------- Propiedades ----------------- */
 .propiedades-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -672,4 +672,79 @@ padding: 80px 60px;
   font-weight: 700;
   color: var(--blanco);
   margin-top: 4px;
+}
+
+
+/* ----------------- Detalle de propiedad / galería ----------------- */
+.detalle-propiedad{ padding-top:60px; }
+
+.galeria-principal{
+  position:relative;
+  width:100%;
+  height:70vh;
+  min-height:420px;
+  border-radius:6px;
+  overflow:hidden;
+  background:#111;
+}
+.galeria-principal img{
+  width:100%; height:100%; object-fit:cover; display:block;
+}
+.galeria-flecha{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:44px; height:44px;
+  background:var(--negro); color:var(--blanco);
+  border:none; border-radius:4px;
+  font-size:1.1rem; cursor:pointer; z-index:3;
+}
+.galeria-flecha-izq{ left:20px; }
+.galeria-flecha-der{ right:20px; }
+
+.galeria-overlay{
+  position:absolute; left:0; bottom:0; width:100%;
+  padding:24px 30px;
+  background:linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+  z-index:2;
+}
+.etiquetas{ display:flex; gap:8px; margin-bottom:14px; }
+.etiqueta{
+  background:var(--blanco); color:var(--negro);
+  font-size:0.72rem; text-transform:uppercase; letter-spacing:0.05em;
+  padding:6px 12px; border-radius:4px;
+}
+.galeria-info{
+  display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+}
+.galeria-info h1{
+  font-family:'Cormorant Garamond', serif;
+  font-size:clamp(1.6rem,3vw,2.4rem);
+  color:var(--blanco); margin:0;
+}
+.precio-badge{
+  background:var(--naranjoso); color:var(--blanco);
+  font-weight:700; font-size:1.15rem;
+  padding:8px 16px; border-radius:4px;
+}
+
+.galeria-miniaturas{
+  display:flex; gap:12px; margin-top:16px;
+  overflow-x:auto; padding-bottom:8px;
+}
+.miniatura{
+  width:120px; height:80px; object-fit:cover;
+  border-radius:4px; cursor:pointer; flex-shrink:0;
+  opacity:0.55; transition:opacity 0.25s ease, outline 0.25s ease;
+}
+.miniatura.activa, .miniatura:hover{ opacity:1; outline:2px solid var(--naranjoso); }
+
+.detalle-datos{
+  display:flex; flex-wrap:wrap; gap:1px;
+  background:var(--blanco); border:2px solid var(--blanco);
+  margin-top:40px;
+}
+.dato{ background:var(--negro); padding:18px 22px; flex:1 1 140px; }
+.dato-num{ font-family:'Cormorant Garamond', serif; font-size:1.8rem; color:var(--blanco); display:block; }
+.dato-label{ font-size:0.7rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--blanco); }
+.detalle-descripcion{
+  flex-basis:100%; padding:24px 22px 8px; color:var(--blanco); opacity:0.85;
 }

@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
  
 import com.guardado.proyecto.model.propiedad;
 import com.guardado.proyecto.repository.propiedadRepository;
+import java.util.ArrayList;
+import java.util.List;
  
 @Configuration
 public class dataSeeder {
@@ -21,6 +23,7 @@ public class dataSeeder {
                 propiedad p1 = new propiedad();
                 p1.setTitulo("Casa en Venta Fracc. Villas de Altamira");
                 p1.setImagenUrl("images/casa1.jpg");
+                p1.setImagenes(List.of("images/casa1.jpg", "images/casa2.jpg", "images/marmol.jpg"));
                 p1.setTipoPropiedad("Casa");
                 p1.setConstruccion(165);
                 p1.setTerreno(89);
@@ -28,10 +31,11 @@ public class dataSeeder {
                 p1.setUbicacion("Altamira");
                 p1.setPrecio(1150000);
                 repo.save(p1);
- 
+
                 propiedad p2 = new propiedad();
                 p2.setTitulo("Casa en Venta Col. Tamaulipas, Altamira");
                 p2.setImagenUrl("images/marmol.jpg");
+                p2.setImagenes(List.of("images/marmol.jpg", "images/casa1.jpg"));
                 p2.setTipoPropiedad("Casa");
                 p2.setConstruccion(83);
                 p2.setTerreno(120);
@@ -39,10 +43,11 @@ public class dataSeeder {
                 p2.setUbicacion("Altamira");
                 p2.setPrecio(767880);
                 repo.save(p2);
- 
+
                 propiedad p3 = new propiedad();
                 p3.setTitulo("Casa en Venta Fracc. Santa Elena, Altamira");
                 p3.setImagenUrl("images/casa2.jpg");
+                p3.setImagenes(List.of("images/casa2.jpg", "images/casa1.jpg", "images/green.jpg"));
                 p3.setTipoPropiedad("Casa");
                 p3.setConstruccion(45);
                 p3.setTerreno(119);
