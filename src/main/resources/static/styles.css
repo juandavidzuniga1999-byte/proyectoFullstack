@@ -746,7 +746,16 @@ padding: 80px 60px;
 .dato-num{ font-family:'Cormorant Garamond', serif; font-size:1.8rem; color:var(--blanco); display:block; }
 .dato-label{ font-size:0.7rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--blanco); }
 .detalle-descripcion{
-  background:var(--negro);flex-basis:100%; padding:24px 22px 8px; color:var(--blanco); opacity:0.85;
+  width:100%;
+  background:var(--negro);
+  color:var(--blanco);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:4px;
+  padding:12px;
+  font-family:'Inter', sans-serif;
+  font-size:0.95rem;
+  resize:vertical;
+  box-sizing:border-box;
 }
 
 .descripcion-editor{
