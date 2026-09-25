@@ -746,7 +746,7 @@ padding: 80px 60px;
 .dato-num{ font-family:'Cormorant Garamond', serif; font-size:1.8rem; color:var(--blanco); display:block; }
 .dato-label{ font-size:0.7rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--blanco); }
 .detalle-descripcion{
-  flex-basis:100%; padding:24px 22px 8px; color:var(--blanco); opacity:0.85;
+  background:var(--negro);flex-basis:100%; padding:24px 22px 8px; color:var(--blanco); opacity:0.85;
 }
 
 .descripcion-editor{
