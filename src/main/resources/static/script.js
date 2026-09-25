@@ -244,8 +244,7 @@ async function cargarDetallePropiedad() {
   <div class="dato"><span class="dato-num">${p.terreno ?? '-'}</span><span class="dato-label">m² Terreno</span></div>
   <div class="dato"><span class="dato-num">${p.cuarto ?? '-'}</span><span class="dato-label">Recámaras</span></div>
   <div class="dato"><span class="dato-num">${p.banos ?? '-'}</span><span class="dato-label">Baños</span></div>
-  <div class="dato"><span class="dato-num">${p.estacionamiento ?? '-'}</span><span class="dato-label">Estacionamiento</span></div>
-  <span class="dato-label">Descripcion</span>${p.descripcion ? `<p class="detalle-descripcion">${p.descripcion}</p>` : ''}
+  <div class="detalle-descripcion"><span class="dato-label">Descripcion</span><span class="detalle-descripcion-texto">${p.descripcion ?? '-'}</span></div>
 `;
 
     
