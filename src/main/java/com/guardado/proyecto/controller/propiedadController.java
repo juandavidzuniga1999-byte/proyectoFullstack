@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.guardado.proyecto.model.Propiedad;
 import com.guardado.proyecto.repository.propiedadRepository;
 
+import java.util.Map;
+import org.springframework.web.bind.annotation.PatchMapping;
+
 @RestController
 @RequestMapping("/api/propiedades")
 public class propiedadController {
@@ -65,4 +68,15 @@ public class propiedadController {
         propiedadRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    // PATCH /api/propiedades/5/descripcion -> actualiza SOLO la descripción,
+    // sin tocar el resto de los campos de la propiedad
+    @PatchMapping("/{id}/descripcion")
+    public ResponseEntity<Propiedad> actualizarDescripcion(@PathVariable int id, @RequestBody Map<String, String> body) {
+    return propiedadRepository.findById(id).map(existente -> {
+        existente.setDescripcion(body.get("descripcion"));
+        Propiedad actualizada = propiedadRepository.save(existente);
+        return ResponseEntity.ok(actualizada);
+    }).orElse(ResponseEntity.notFound().build());
+}
 }

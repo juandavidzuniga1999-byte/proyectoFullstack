@@ -41,16 +41,16 @@ if (lightboxEl) {
 
 // ---- CARRUSEL DE SERVICIOS ----
 const servicios = [
-  { img: "images/casa1.jpg", alt: "Servicios hipotecarios" , subtitulo: "SERVICIOS", titulo: "Hipotecarios" },
-  { img: "images/casa1.jpg", alt: "administracion de inmuebles" , subtitulo: "ADMINISTRACION DE", titulo: "Inmbuebles" },
-  { img: "images/casa1.jpg", alt: "escritura propiedad" , subtitulo: "ESCRITURACION DE", titulo: "Propiedad" },
-  { img: "images/casa1.jpg", alt: "asesoria fiscal" , subtitulo: "ASESORIA", titulo: "Fiscal" },
-  { img: "images/casa1.jpg", alt: "gestion ante instituciones gubernamentales" , subtitulo: "GESTION ANTE INSTITUCIONES", titulo: "Gubernamentales" },
-  { img: "images/casa1.jpg", alt: "promocion de inmueble" , subtitulo: "PROMOCION DE", titulo: "Inmbueble" },
-  { img: "images/casa1.jpg", alt: "opiniones de valor" , subtitulo: "OPINIONES DE", titulo: "Valor" },
-  { img: "images/casa1.jpg", alt: "analisis juridico de inmuebles" , subtitulo: "ANALISIS JURIDICO DE", titulo: "Inmbuebles" },
-  { img: "images/casa1.jpg", alt: "servicios notariales" , subtitulo: "SERVICIOS", titulo: "Notariales" },
-  { img: "images/casa1.jpg", alt: "servicios de mantenimiento" , subtitulo: "SERVICIOS DE", titulo: "Mantenimiento" },
+  { img: "images/casa1.jpg", alt: "Servicios hipotecarios", subtitulo: "SERVICIOS", titulo: "Hipotecarios" },
+  { img: "images/casa1.jpg", alt: "administracion de inmuebles", subtitulo: "ADMINISTRACION DE", titulo: "Inmbuebles" },
+  { img: "images/casa1.jpg", alt: "escritura propiedad", subtitulo: "ESCRITURACION DE", titulo: "Propiedad" },
+  { img: "images/casa1.jpg", alt: "asesoria fiscal", subtitulo: "ASESORIA", titulo: "Fiscal" },
+  { img: "images/casa1.jpg", alt: "gestion ante instituciones gubernamentales", subtitulo: "GESTION ANTE INSTITUCIONES", titulo: "Gubernamentales" },
+  { img: "images/casa1.jpg", alt: "promocion de inmueble", subtitulo: "PROMOCION DE", titulo: "Inmbueble" },
+  { img: "images/casa1.jpg", alt: "opiniones de valor", subtitulo: "OPINIONES DE", titulo: "Valor" },
+  { img: "images/casa1.jpg", alt: "analisis juridico de inmuebles", subtitulo: "ANALISIS JURIDICO DE", titulo: "Inmbuebles" },
+  { img: "images/casa1.jpg", alt: "servicios notariales", subtitulo: "SERVICIOS", titulo: "Notariales" },
+  { img: "images/casa1.jpg", alt: "servicios de mantenimiento", subtitulo: "SERVICIOS DE", titulo: "Mantenimiento" },
 ];
 
 let indiceActual = 1;
@@ -60,7 +60,6 @@ function crearCarrusel() {
   const puntos = document.getElementById('carruselPuntos');
   if (!track || !puntos) return;
 
-  // Crea TODAS las tarjetas una sola vez (esto ya no se vuelve a borrar)
   track.innerHTML = '';
   servicios.forEach((servicio) => {
     const card = document.createElement('div');
@@ -79,7 +78,6 @@ function crearCarrusel() {
     track.appendChild(card);
   });
 
-  // Crea los puntos una sola vez también
   puntos.innerHTML = '';
   servicios.forEach((_, i) => {
     const punto = document.createElement('span');
@@ -96,19 +94,16 @@ function actualizarCarrusel() {
   if (!track || !puntos) return;
 
   const cards = track.querySelectorAll('.carrusel-card');
-  const anchoCard = 340 + 24; // ancho de la tarjeta + el gap, deben coincidir con tu CSS
+  const anchoCard = 340 + 24;
 
-  // Mueve la fila entera para centrar la tarjeta activa
   const viewportWidth = track.parentElement.offsetWidth;
   const desplazamiento = (viewportWidth / 2) - (anchoCard * indiceActual) - (340 / 2);
   track.style.transform = `translateX(${desplazamiento}px)`;
 
-  // Marca cuál tarjeta es la destacada
   cards.forEach((card, i) => {
     card.classList.toggle('destacada', i === indiceActual);
   });
 
-  // Marca cuál punto está activo
   puntos.querySelectorAll('span').forEach((punto, i) => {
     punto.classList.toggle('activo', i === indiceActual);
   });
@@ -120,65 +115,60 @@ function moverCarrusel(direccion) {
 }
 
 crearCarrusel();
-
-// Recalcula la posición si cambia el tamaño de la ventana
 window.addEventListener('resize', actualizarCarrusel);
 
-
 // ---- PROPIEDADES DESDE LA BASE DE DATOS ----
-// Pinta las tarjetas en #propiedadesGrid llamando a /api/propiedades
 function formatearPrecio(valor) {
   return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(valor);
 }
- 
+
 async function cargarPropiedades() {
   const grid = document.getElementById('propiedadesGrid');
   const estado = document.getElementById('propiedadesEstado');
-  if (!grid) return; // esta pagina no tiene el apartado de propiedades
- 
+  if (!grid) return;
+
   try {
     const respuesta = await fetch('/api/propiedades');
     if (!respuesta.ok) throw new Error('Respuesta no OK: ' + respuesta.status);
- 
+
     const propiedades = await respuesta.json();
- 
+
     if (!propiedades.length) {
       if (estado) estado.textContent = 'Aún no hay propiedades cargadas.';
       return;
     }
- 
-    grid.innerHTML = ''; // limpia el "Cargando..."
- 
+
+    grid.innerHTML = '';
+
     propiedades.forEach((p) => {
-  const card = document.createElement('div');
-  card.className = 'propiedad-card';
+      const card = document.createElement('div');
+      card.className = 'propiedad-card';
 
-  card.innerHTML = `
-    <div class="propiedad-imagen" style="background-image:url('${p.imagenUrl || 'images/casa1.jpg'}')"></div>
-    <div class="propiedad-info">
-      <h3 class="propiedad-titulo">${p.titulo || p.tipoPropiedad || 'Propiedad'}</h3>
-      <div class="propiedad-datos">
-        <span>Construcción: ${p.construccion ?? '-'} m²</span>
-        <span>Terreno: ${p.terreno ?? '-'} m²</span>
-      </div>
-      <span class="propiedad-condicion">${p.condicion || ''}</span>
-      <span class="propiedad-precio">${formatearPrecio(p.precio || 0)}</span>
-    </div>
-  `;
+      card.innerHTML = `
+        <div class="propiedad-imagen" style="background-image:url('${p.imagenUrl || 'images/casa1.jpg'}')"></div>
+        <div class="propiedad-info">
+          <h3 class="propiedad-titulo">${p.titulo || p.tipoPropiedad || 'Propiedad'}</h3>
+          <div class="propiedad-datos">
+            <span>Construcción: ${p.construccion ?? '-'} m²</span>
+            <span>Terreno: ${p.terreno ?? '-'} m²</span>
+          </div>
+          <span class="propiedad-condicion">${p.condicion || ''}</span>
+          <span class="propiedad-precio">${formatearPrecio(p.precio || 0)}</span>
+        </div>
+      `;
 
-  card.style.cursor = 'pointer';
-  card.onclick = () => { window.location.href = `propiedad.html?id=${p.id}`; };
+      card.style.cursor = 'pointer';
+      card.onclick = () => { window.location.href = `propiedad.html?id=${p.id}`; };
 
-  grid.appendChild(card);
-});
+      grid.appendChild(card);
+    });
   } catch (error) {
     console.error('No se pudieron cargar las propiedades:', error);
     if (estado) estado.textContent = 'No se pudieron cargar las propiedades. Intenta más tarde.';
   }
 }
- 
-cargarPropiedades();
 
+cargarPropiedades();
 
 // ---- GALERÍA DE FOTOS DE UNA PROPIEDAD (propiedad.html) ----
 let fotosPropiedadActual = [];
@@ -219,6 +209,7 @@ async function cargarDetallePropiedad() {
     if (!respuesta.ok) throw new Error('No encontrada');
     const p = await respuesta.json();
 
+    // --- fotos ---
     fotosPropiedadActual = (p.imagenes && p.imagenes.length) ? p.imagenes : [p.imagenUrl || 'images/casa1.jpg'];
     indiceFotoActual = 0;
     mostrarFotoActual();
@@ -233,24 +224,66 @@ async function cargarDetallePropiedad() {
       miniaturas.appendChild(mini);
     });
 
+    // --- título / precio ---
     titulo.textContent = p.titulo || p.tipoPropiedad || 'Propiedad';
     document.getElementById('precioPropiedad').textContent = formatearPrecio(p.precio || 0);
 
+    // --- etiquetas ---
     const etiquetas = document.getElementById('etiquetasPropiedad');
     etiquetas.innerHTML = '';
-    
+    [p.condicion, p.tipoPropiedad, p.ubicacion].filter(Boolean).forEach(txt => {
+      const span = document.createElement('span');
+      span.className = 'etiqueta';
+      span.textContent = txt;
+      etiquetas.appendChild(span);
+    });
 
+    // --- datos numéricos ---
     document.getElementById('datosPropiedad').innerHTML = `
       <div class="dato"><span class="dato-num">${p.construccion ?? '-'}</span><span class="dato-label">m² Construcción</span></div>
       <div class="dato"><span class="dato-num">${p.terreno ?? '-'}</span><span class="dato-label">m² Terreno</span></div>
       <div class="dato"><span class="dato-num">${p.cuarto ?? '-'}</span><span class="dato-label">Recámaras</span></div>
       <div class="dato"><span class="dato-num">${p.banos ?? '-'}</span><span class="dato-label">Baños</span></div>
       <div class="dato"><span class="dato-num">${p.estacionamiento ?? '-'}</span><span class="dato-label">Estacionamiento</span></div>
-      ${p.descripcion ? `<p class="detalle-descripcion">${p.descripcion}</p>` : ''}
     `;
+
+    // --- descripción (todo lo que necesita "p" va AQUÍ, dentro del try) ---
+    const campoDescripcion = document.getElementById('descripcionTexto');
+    if (campoDescripcion) campoDescripcion.value = p.descripcion || '';
+
+    window.propiedadIdActual = p.id; // lo usa guardarDescripcion()
+
   } catch (error) {
     console.error('No se pudo cargar la propiedad:', error);
     titulo.textContent = 'No se pudo cargar la propiedad';
+  }
+}
+
+// función GLOBAL (no anidada), así el onclick="guardarDescripcion()" del HTML la encuentra
+async function guardarDescripcion() {
+  const campo = document.getElementById('descripcionTexto');
+  const estado = document.getElementById('descripcionEstado');
+  const boton = document.getElementById('guardarDescripcionBtn');
+  if (!campo || !window.propiedadIdActual) return;
+
+  boton.disabled = true;
+  estado.textContent = 'Guardando...';
+
+  try {
+    const respuesta = await fetch(`/api/propiedades/${window.propiedadIdActual}/descripcion`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ descripcion: campo.value })
+    });
+    if (!respuesta.ok) throw new Error('Respuesta no OK: ' + respuesta.status);
+
+    estado.textContent = 'Guardado ✓';
+    setTimeout(() => { estado.textContent = ''; }, 2000);
+  } catch (error) {
+    console.error('No se pudo guardar la descripción:', error);
+    estado.textContent = 'Error al guardar';
+  } finally {
+    boton.disabled = false;
   }
 }
 

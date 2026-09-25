@@ -30,6 +30,7 @@ public class dataSeeder {
                 p1.setCondicion("En Venta");
                 p1.setUbicacion("Altamira");
                 p1.setPrecio(1150000);
+                p1.setDescripcion("La casa mas verga del mundo");
                 repo.save(p1);
 
                 Propiedad p2 = new Propiedad();
