@@ -240,18 +240,16 @@ async function cargarDetallePropiedad() {
 
     // --- datos numéricos ---
     document.getElementById('datosPropiedad').innerHTML = `
-      <div class="dato"><span class="dato-num">${p.construccion ?? '-'}</span><span class="dato-label">m² Construcción</span></div>
-      <div class="dato"><span class="dato-num">${p.terreno ?? '-'}</span><span class="dato-label">m² Terreno</span></div>
-      <div class="dato"><span class="dato-num">${p.cuarto ?? '-'}</span><span class="dato-label">Recámaras</span></div>
-      <div class="dato"><span class="dato-num">${p.banos ?? '-'}</span><span class="dato-label">Baños</span></div>
-      <div class="dato"><span class="dato-num">${p.estacionamiento ?? '-'}</span><span class="dato-label">Estacionamiento</span></div>
-    `;
+  <div class="dato"><span class="dato-num">${p.construccion ?? '-'}</span><span class="dato-label">m² Construcción</span></div>
+  <div class="dato"><span class="dato-num">${p.terreno ?? '-'}</span><span class="dato-label">m² Terreno</span></div>
+  <div class="dato"><span class="dato-num">${p.cuarto ?? '-'}</span><span class="dato-label">Recámaras</span></div>
+  <div class="dato"><span class="dato-num">${p.banos ?? '-'}</span><span class="dato-label">Baños</span></div>
+  <div class="dato"><span class="dato-num">${p.estacionamiento ?? '-'}</span><span class="dato-label">Estacionamiento</span></div>
+  ${p.descripcion ? `<p class="detalle-descripcion">${p.descripcion}</p>` : ''}
+`;
 
-    // --- descripción (todo lo que necesita "p" va AQUÍ, dentro del try) ---
-    const campoDescripcion = document.getElementById('descripcionTexto');
-    if (campoDescripcion) campoDescripcion.value = p.descripcion || '';
-
-    window.propiedadIdActual = p.id; // lo usa guardarDescripcion()
+    
+    
 
   } catch (error) {
     console.error('No se pudo cargar la propiedad:', error);
@@ -259,32 +257,5 @@ async function cargarDetallePropiedad() {
   }
 }
 
-// función GLOBAL (no anidada), así el onclick="guardarDescripcion()" del HTML la encuentra
-async function guardarDescripcion() {
-  const campo = document.getElementById('descripcionTexto');
-  const estado = document.getElementById('descripcionEstado');
-  const boton = document.getElementById('guardarDescripcionBtn');
-  if (!campo || !window.propiedadIdActual) return;
-
-  boton.disabled = true;
-  estado.textContent = 'Guardando...';
-
-  try {
-    const respuesta = await fetch(`/api/propiedades/${window.propiedadIdActual}/descripcion`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ descripcion: campo.value })
-    });
-    if (!respuesta.ok) throw new Error('Respuesta no OK: ' + respuesta.status);
-
-    estado.textContent = 'Guardado ✓';
-    setTimeout(() => { estado.textContent = ''; }, 2000);
-  } catch (error) {
-    console.error('No se pudo guardar la descripción:', error);
-    estado.textContent = 'Error al guardar';
-  } finally {
-    boton.disabled = false;
-  }
-}
 
 cargarDetallePropiedad();
