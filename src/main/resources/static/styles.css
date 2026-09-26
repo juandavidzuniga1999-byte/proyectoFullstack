@@ -746,16 +746,9 @@ padding: 80px 60px;
 .dato-num{ font-family:'Cormorant Garamond', serif; font-size:1.8rem; color:var(--blanco); display:block; }
 .dato-label{ font-size:0.7rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--blanco); }
 .detalle-descripcion{
-  width:100%;
-  background:var(--negro);
-  color:var(--blanco);
-  border:1px solid rgba(255,255,255,0.15);
-  border-radius:4px;
-  padding:12px;
-  font-family:'Inter', sans-serif;
-  font-size:0.95rem;
-  resize:vertical;
-  box-sizing:border-box;
+  margin: 0;
+  color: var(--blanco);
+  opacity: 0.85;
 }
 .detalle-descripcion-texto{
   width:100%;
@@ -807,3 +800,12 @@ padding: 80px 60px;
 }
 .descripcion-editor button:disabled{ opacity:0.6; cursor:default; }
 #descripcionEstado{ margin-left:12px; font-size:0.85rem; opacity:0.8; }
+
+.dato-descripcion{
+  flex-basis: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 22px;
+  background: var(--negro);
+}
