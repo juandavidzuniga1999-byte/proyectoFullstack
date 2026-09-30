@@ -204,6 +204,8 @@ nav {
   z-index: 1;
 }
 .display-content{
+  display: flex;
+  justify-content: center;
     position:center; 
     z-index:2; 
     padding:0 32px 72px; 
@@ -219,7 +221,7 @@ nav {
     max-width:14ch;
     position: center;
   }
-.display-content p.lead{max-width:46ch; color:rgba(251,249,244,0.85); font-size:1.5rem;}
+.display-content p.lead{max-width:46ch; color:rgba(251,249,244,0.85); font-size:1.5rem;text-align: center;}
 
 /*------- Mision -------*/
 .section-head{max-width:1000px; margin-bottom:100px;margin:0 auto;margin-top: 100px;}
