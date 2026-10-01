@@ -30,4 +30,3 @@ public class JPADetalleUsuarios implements UserDetails  {
         return List.of(usuario::getAutoridad);
     }
 }
-

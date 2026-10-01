@@ -1,11 +1,14 @@
 package com.guardado.proyecto.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class usuario {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nombreUsuario;
     private String contraseña;
@@ -18,5 +21,5 @@ public class usuario {
     public String getContraseña() {return contraseña;}
     public void setContraseña(String contraseña) {this.contraseña = contraseña;}
     public String getAutoridad() {return autoridad;}
-    public void setAutoridad(String autoridad) {this.autoridad = autoridad;}  
+    public void setAutoridad(String autoridad) {this.autoridad = autoridad;}
 }

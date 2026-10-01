@@ -5,7 +5,7 @@ public class credenciales {
     private String contraseña;
 
     public String getUsuario(){
-    return usuario;
+        return usuario;
     }
     public void setUsuario(String usuario){
         this.usuario=usuario;
@@ -18,5 +18,4 @@ public class credenciales {
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
     }
-
 }

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios Guardado — Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+<header>
+    <nav>
+        <div class="nav-izquierda">
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="serviciosMov.html">Propiedades</a></li>
+            </ul>
+        </div>
+        <button class="burger" id="burgerBtn" aria-label="Abrir menú">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+</header>
+
+<section class="wrap admin-wrap">
+
+    <!-- ---- LOGIN (se oculta cuando ya hay sesion) ---- -->
+    <div id="loginBox" class="admin-card">
+        <h2>Iniciar sesión</h2>
+        <p class="admin-hint">Acceso solo para administradores.</p>
+        <form id="loginForm">
+            <label>Usuario
+                <input type="text" id="loginUsuario" required autocomplete="username">
+            </label>
+            <label>Contraseña
+                <input type="password" id="loginPassword" required autocomplete="current-password">
+            </label>
+            <button type="submit">Entrar</button>
+            <p id="loginError" class="admin-error"></p>
+        </form>
+    </div>
+
+    <!-- ---- PANEL DE ADMIN (se muestra cuando ya hay sesion) ---- -->
+    <div id="panelAdmin" style="display:none;">
+        <div class="admin-header">
+            <h1>Panel de administración</h1>
+            <button id="logoutBtn" class="admin-btn-secundario">Cerrar sesión</button>
+        </div>
+
+        <div class="admin-card">
+            <h2>Agregar propiedad</h2>
+            <form id="formPropiedad">
+                <div class="admin-grid">
+                    <label>Título
+                        <input type="text" name="titulo" required>
+                    </label>
+                    <label>Tipo
+                        <input type="text" name="tipoPropiedad" placeholder="Casa, Terreno, etc.">
+                    </label>
+                    <label>Imagen (ruta)
+                        <input type="text" name="imagenUrl" placeholder="images/casa1.jpg">
+                    </label>
+                    <label>Condición
+                        <input type="text" name="condicion" placeholder="En Venta, Remate, etc.">
+                    </label>
+                    <label>Ubicación
+                        <input type="text" name="ubicacion">
+                    </label>
+                    <label>Precio
+                        <input type="number" name="precio" min="0" required>
+                    </label>
+                    <label>Construcción (m²)
+                        <input type="number" name="construccion" min="0">
+                    </label>
+                    <label>Terreno (m²)
+                        <input type="number" name="terreno" min="0">
+                    </label>
+                    <label>Recámaras
+                        <input type="number" name="cuarto" min="0">
+                    </label>
+                    <label>Baños
+                        <input type="number" name="banos" min="0">
+                    </label>
+                    <label>Medio baño
+                        <input type="number" name="medioBano" min="0">
+                    </label>
+                    <label>Estacionamiento
+                        <input type="number" name="estacionamiento" min="0">
+                    </label>
+                </div>
+                <label class="admin-full">Descripción
+                    <textarea name="descripcion" rows="3"></textarea>
+                </label>
+                <button type="submit">Guardar propiedad</button>
+                <p id="formError" class="admin-error"></p>
+            </form>
+        </div>
+
+        <div class="admin-card">
+            <h2>Propiedades existentes</h2>
+            <div id="listaAdminPropiedades" class="admin-lista">
+                <p>Cargando...</p>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-bottom">
+      <span>© 2026 Servicios Guardado. Todos los derechos reservados.</span>
+    </div>
+  </div>
+</footer>
+<script src="script.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

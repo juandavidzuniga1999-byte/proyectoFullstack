@@ -35,23 +35,29 @@ public class JwtFilter extends OncePerRequestFilter {
         String token = null;
         String nombreUsuario = null;
 
-        if (encabezadoAutorizacion != null && encabezadoAutorizacion.startsWith(PREFIJO_TOKEN_JW_STRING)) {
-            token = encabezadoAutorizacion.substring(PREFIJO_TOKEN_JW_STRING.length());
-            nombreUsuario = jwtService.extraerNombreUsuario(token);
-        }
-
-        if (nombreUsuario != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails detallesUsuario = getJPADetalleUsuariosService().loadUserByUsername(nombreUsuario);
-
-            if (jwtService.validarToken(token, detallesUsuario)) {
-                UsernamePasswordAuthenticationToken tokenAutenticado = new UsernamePasswordAuthenticationToken(detallesUsuario,
-                        null, detallesUsuario.getAuthorities());
-                tokenAutenticado.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(tokenAutenticado);
+        try {
+            if (encabezadoAutorizacion != null && encabezadoAutorizacion.startsWith(PREFIJO_TOKEN_JW_STRING)) {
+                token = encabezadoAutorizacion.substring(PREFIJO_TOKEN_JW_STRING.length());
+                nombreUsuario = jwtService.extraerNombreUsuario(token);
             }
+
+            if (nombreUsuario != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails detallesUsuario = getJPADetalleUsuariosService().loadUserByUsername(nombreUsuario);
+
+                if (jwtService.validarToken(token, detallesUsuario)) {
+                    UsernamePasswordAuthenticationToken tokenAutenticado = new UsernamePasswordAuthenticationToken(detallesUsuario,
+                            null, detallesUsuario.getAuthorities());
+                    tokenAutenticado.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(tokenAutenticado);
+                }
+            }
+        } catch (Exception e) {
+            // Token invalido, mal formado o expirado: simplemente no se autentica
+            // y la peticion sigue como anonima (Security la va a rechazar si la
+            // ruta lo requiere).
+            SecurityContextHolder.clearContext();
         }
 
         filterChain.doFilter(request, response);
     }
 }
-
