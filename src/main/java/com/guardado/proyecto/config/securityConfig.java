@@ -37,6 +37,7 @@ public class securityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/imagenes/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/api/propiedades/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/api/propiedades/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PATCH, "/api/propiedades/**").hasRole("ADMIN")
