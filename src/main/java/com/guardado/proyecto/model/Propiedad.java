@@ -35,6 +35,7 @@ public class Propiedad {
     private String descripcion;
     private int precio;
 
+    // Galeria: varias fotos por propiedad, en orden. La primera se usa de portada.
     @ElementCollection
     @CollectionTable(name = "propiedad_imagenes", joinColumns = @JoinColumn(name = "propiedad_id"))
     @OrderColumn(name = "posicion")
@@ -152,6 +153,7 @@ public class Propiedad {
     public void setPrecio(int precio) {
         this.precio = precio;
     }
+
     public List<String> getImagenes() {
         return imagenes;
     }

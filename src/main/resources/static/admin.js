@@ -65,53 +65,85 @@ if (logoutBtn) {
   });
 }
 
-// ---- SUBIR IMAGEN ----
-// En cuanto el usuario elige un archivo, se sube de inmediato y se guarda
-// la URL que regresa el backend en el campo oculto imagenUrl.
+// ---- SUBIR IMAGENES (varias) ----
+// Cada foto elegida se sube de inmediato a /api/imagenes/upload y su URL se
+// agrega a esta lista. La lista se manda al guardar la propiedad.
+let imagenesSubidas = [];
+
+function pintarMiniaturas() {
+  const cont = document.getElementById('miniaturasAdmin');
+  if (!cont) return;
+  cont.innerHTML = '';
+  imagenesSubidas.forEach((url, i) => {
+    const item = document.createElement('div');
+    item.className = 'admin-miniatura';
+    const img = document.createElement('img');
+    img.src = url;
+    const quitar = document.createElement('button');
+    quitar.type = 'button';
+    quitar.textContent = '×';
+    quitar.title = 'Quitar foto';
+    quitar.addEventListener('click', () => {
+      imagenesSubidas.splice(i, 1);
+      pintarMiniaturas();
+    });
+    item.appendChild(img);
+    if (i === 0) {
+      const tag = document.createElement('span');
+      tag.textContent = 'Portada';
+      item.appendChild(tag);
+    }
+    item.appendChild(quitar);
+    cont.appendChild(item);
+  });
+}
+
 const inputImagen = document.getElementById('inputImagen');
 if (inputImagen) {
   inputImagen.addEventListener('change', async () => {
-    const archivo = inputImagen.files[0];
+    const archivos = Array.from(inputImagen.files);
     const estadoEl = document.getElementById('imagenEstado');
-    const preview = document.getElementById('previewImagen');
-    const hiddenUrl = document.getElementById('imagenUrlHidden');
-    if (!archivo) return;
+    if (!archivos.length) return;
 
-    estadoEl.textContent = 'Subiendo...';
-    hiddenUrl.value = '';
+    let fallos = 0;
+    for (let i = 0; i < archivos.length; i++) {
+      estadoEl.textContent = `Subiendo ${i + 1} de ${archivos.length}...`;
+      const datosForm = new FormData();
+      datosForm.append('archivo', archivos[i]);
 
-    const datosForm = new FormData();
-    datosForm.append('archivo', archivo);
+      try {
+        const respuesta = await fetch('/api/imagenes/upload', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + getToken() },
+          body: datosForm
+        });
 
-    try {
-      const respuesta = await fetch('/api/imagenes/upload', {
-        method: 'POST',
-        headers: { 'Authorization': 'Bearer ' + getToken() },
-        body: datosForm
-      });
+        if (respuesta.status === 401 || respuesta.status === 403) {
+          estadoEl.textContent = 'Tu sesión expiró, vuelve a iniciar sesión.';
+          limpiarToken();
+          mostrarPanel(false);
+          return;
+        }
 
-      if (respuesta.status === 401 || respuesta.status === 403) {
-        estadoEl.textContent = 'Tu sesión expiró, vuelve a iniciar sesión.';
-        limpiarToken();
-        mostrarPanel(false);
-        return;
+        const datos = await respuesta.json().catch(() => ({}));
+        if (!respuesta.ok) {
+          fallos++;
+          estadoEl.textContent = datos.error || 'No se pudo subir una de las imágenes.';
+          continue;
+        }
+
+        imagenesSubidas.push(datos.url);
+        pintarMiniaturas();
+      } catch (err) {
+        console.error(err);
+        fallos++;
       }
-
-      const datos = await respuesta.json();
-
-      if (!respuesta.ok) {
-        estadoEl.textContent = datos.error || 'No se pudo subir la imagen.';
-        return;
-      }
-
-      hiddenUrl.value = datos.url;
-      estadoEl.textContent = 'Imagen lista ✓';
-      preview.src = datos.url;
-      preview.style.display = 'block';
-    } catch (err) {
-      console.error(err);
-      estadoEl.textContent = 'Error de conexión al subir la imagen.';
     }
+
+    inputImagen.value = ''; // permite volver a elegir las mismas fotos si hace falta
+    estadoEl.textContent = fallos
+      ? `Listo, pero ${fallos} foto(s) no se pudieron subir.`
+      : `${imagenesSubidas.length} foto(s) lista(s) ✓`;
   });
 }
 
@@ -127,7 +159,8 @@ if (formPropiedad) {
     const propiedad = {
       titulo: datosForm.get('titulo'),
       tipoPropiedad: datosForm.get('tipoPropiedad'),
-      imagenUrl: datosForm.get('imagenUrl'),
+      imagenUrl: imagenesSubidas[0] || '',
+      imagenes: imagenesSubidas,
       condicion: datosForm.get('condicion'),
       ubicacion: datosForm.get('ubicacion'),
       descripcion: datosForm.get('descripcion'),
@@ -163,7 +196,8 @@ if (formPropiedad) {
       }
 
       formPropiedad.reset();
-      document.getElementById('previewImagen').style.display = 'none';
+      imagenesSubidas = [];
+      pintarMiniaturas();
       document.getElementById('imagenEstado').textContent = '';
       cargarPropiedadesAdmin();
     } catch (err) {

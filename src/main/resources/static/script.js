@@ -41,16 +41,16 @@ if (lightboxEl) {
 
 // ---- CARRUSEL DE SERVICIOS ----
 const servicios = [
-  { img: "images/casa1.jpg", alt: "Servicios hipotecarios", subtitulo: "SERVICIOS", titulo: "Hipotecarios" },
-  { img: "images/casa1.jpg", alt: "administracion de inmuebles", subtitulo: "ADMINISTRACION DE", titulo: "Inmbuebles" },
-  { img: "images/casa1.jpg", alt: "escritura propiedad", subtitulo: "ESCRITURACION DE", titulo: "Propiedad" },
-  { img: "images/casa1.jpg", alt: "asesoria fiscal", subtitulo: "ASESORIA", titulo: "Fiscal" },
-  { img: "images/casa1.jpg", alt: "gestion ante instituciones gubernamentales", subtitulo: "GESTION ANTE INSTITUCIONES", titulo: "Gubernamentales" },
-  { img: "images/casa1.jpg", alt: "promocion de inmueble", subtitulo: "PROMOCION DE", titulo: "Inmbueble" },
-  { img: "images/casa1.jpg", alt: "opiniones de valor", subtitulo: "OPINIONES DE", titulo: "Valor" },
-  { img: "images/casa1.jpg", alt: "analisis juridico de inmuebles", subtitulo: "ANALISIS JURIDICO DE", titulo: "Inmbuebles" },
-  { img: "images/casa1.jpg", alt: "servicios notariales", subtitulo: "SERVICIOS", titulo: "Notariales" },
-  { img: "images/casa1.jpg", alt: "servicios de mantenimiento", subtitulo: "SERVICIOS DE", titulo: "Mantenimiento" },
+  { img: "images/casa1.jpg", alt: "Servicios hipotecarios" , subtitulo: "SERVICIOS", titulo: "Hipotecarios" },
+  { img: "images/casa1.jpg", alt: "administracion de inmuebles" , subtitulo: "ADMINISTRACION DE", titulo: "Inmbuebles" },
+  { img: "images/casa1.jpg", alt: "escritura propiedad" , subtitulo: "ESCRITURACION DE", titulo: "Propiedad" },
+  { img: "images/casa1.jpg", alt: "asesoria fiscal" , subtitulo: "ASESORIA", titulo: "Fiscal" },
+  { img: "images/casa1.jpg", alt: "gestion ante instituciones gubernamentales" , subtitulo: "GESTION ANTE INSTITUCIONES", titulo: "Gubernamentales" },
+  { img: "images/casa1.jpg", alt: "promocion de inmueble" , subtitulo: "PROMOCION DE", titulo: "Inmbueble" },
+  { img: "images/casa1.jpg", alt: "opiniones de valor" , subtitulo: "OPINIONES DE", titulo: "Valor" },
+  { img: "images/casa1.jpg", alt: "analisis juridico de inmuebles" , subtitulo: "ANALISIS JURIDICO DE", titulo: "Inmbuebles" },
+  { img: "images/casa1.jpg", alt: "servicios notariales" , subtitulo: "SERVICIOS", titulo: "Notariales" },
+  { img: "images/casa1.jpg", alt: "servicios de mantenimiento" , subtitulo: "SERVICIOS DE", titulo: "Mantenimiento" },
 ];
 
 let indiceActual = 1;
@@ -60,6 +60,7 @@ function crearCarrusel() {
   const puntos = document.getElementById('carruselPuntos');
   if (!track || !puntos) return;
 
+  // Crea TODAS las tarjetas una sola vez (esto ya no se vuelve a borrar)
   track.innerHTML = '';
   servicios.forEach((servicio) => {
     const card = document.createElement('div');
@@ -78,6 +79,7 @@ function crearCarrusel() {
     track.appendChild(card);
   });
 
+  // Crea los puntos una sola vez también
   puntos.innerHTML = '';
   servicios.forEach((_, i) => {
     const punto = document.createElement('span');
@@ -94,16 +96,19 @@ function actualizarCarrusel() {
   if (!track || !puntos) return;
 
   const cards = track.querySelectorAll('.carrusel-card');
-  const anchoCard = 340 + 24;
+  const anchoCard = 340 + 24; // ancho de la tarjeta + el gap, deben coincidir con tu CSS
 
+  // Mueve la fila entera para centrar la tarjeta activa
   const viewportWidth = track.parentElement.offsetWidth;
   const desplazamiento = (viewportWidth / 2) - (anchoCard * indiceActual) - (340 / 2);
   track.style.transform = `translateX(${desplazamiento}px)`;
 
+  // Marca cuál tarjeta es la destacada
   cards.forEach((card, i) => {
     card.classList.toggle('destacada', i === indiceActual);
   });
 
+  // Marca cuál punto está activo
   puntos.querySelectorAll('span').forEach((punto, i) => {
     punto.classList.toggle('activo', i === indiceActual);
   });
@@ -115,9 +120,12 @@ function moverCarrusel(direccion) {
 }
 
 crearCarrusel();
+
+// Recalcula la posición si cambia el tamaño de la ventana
 window.addEventListener('resize', actualizarCarrusel);
 
 // ---- PROPIEDADES DESDE LA BASE DE DATOS ----
+// Pinta las tarjetas en #propiedadesGrid llamando a /api/propiedades
 function formatearPrecio(valor) {
   return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(valor);
 }
@@ -125,7 +133,7 @@ function formatearPrecio(valor) {
 async function cargarPropiedades() {
   const grid = document.getElementById('propiedadesGrid');
   const estado = document.getElementById('propiedadesEstado');
-  if (!grid) return;
+  if (!grid) return; // esta pagina no tiene el apartado de propiedades
 
   try {
     const respuesta = await fetch('/api/propiedades');
@@ -138,7 +146,7 @@ async function cargarPropiedades() {
       return;
     }
 
-    grid.innerHTML = '';
+    grid.innerHTML = ''; // limpia el "Cargando..."
 
     propiedades.forEach((p) => {
       const card = document.createElement('div');
@@ -252,15 +260,10 @@ async function cargarDetallePropiedad() {
     </div>
   ` : ''}
 `;
-
-    
-    
-
   } catch (error) {
     console.error('No se pudo cargar la propiedad:', error);
     titulo.textContent = 'No se pudo cargar la propiedad';
   }
 }
-
 
 cargarDetallePropiedad();
