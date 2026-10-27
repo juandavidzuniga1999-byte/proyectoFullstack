@@ -65,6 +65,56 @@ if (logoutBtn) {
   });
 }
 
+// ---- SUBIR IMAGEN ----
+// En cuanto el usuario elige un archivo, se sube de inmediato y se guarda
+// la URL que regresa el backend en el campo oculto imagenUrl.
+const inputImagen = document.getElementById('inputImagen');
+if (inputImagen) {
+  inputImagen.addEventListener('change', async () => {
+    const archivo = inputImagen.files[0];
+    const estadoEl = document.getElementById('imagenEstado');
+    const preview = document.getElementById('previewImagen');
+    const hiddenUrl = document.getElementById('imagenUrlHidden');
+    if (!archivo) return;
+
+    estadoEl.textContent = 'Subiendo...';
+    hiddenUrl.value = '';
+
+    const datosForm = new FormData();
+    datosForm.append('archivo', archivo);
+
+    try {
+      const respuesta = await fetch('/api/imagenes/upload', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + getToken() },
+        body: datosForm
+      });
+
+      if (respuesta.status === 401 || respuesta.status === 403) {
+        estadoEl.textContent = 'Tu sesión expiró, vuelve a iniciar sesión.';
+        limpiarToken();
+        mostrarPanel(false);
+        return;
+      }
+
+      const datos = await respuesta.json();
+
+      if (!respuesta.ok) {
+        estadoEl.textContent = datos.error || 'No se pudo subir la imagen.';
+        return;
+      }
+
+      hiddenUrl.value = datos.url;
+      estadoEl.textContent = 'Imagen lista ✓';
+      preview.src = datos.url;
+      preview.style.display = 'block';
+    } catch (err) {
+      console.error(err);
+      estadoEl.textContent = 'Error de conexión al subir la imagen.';
+    }
+  });
+}
+
 // ---- AGREGAR PROPIEDAD ----
 const formPropiedad = document.getElementById('formPropiedad');
 if (formPropiedad) {
@@ -113,6 +163,8 @@ if (formPropiedad) {
       }
 
       formPropiedad.reset();
+      document.getElementById('previewImagen').style.display = 'none';
+      document.getElementById('imagenEstado').textContent = '';
       cargarPropiedadesAdmin();
     } catch (err) {
       console.error(err);
