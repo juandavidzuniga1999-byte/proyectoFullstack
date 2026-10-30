@@ -41,16 +41,16 @@ if (lightboxEl) {
 
 // ---- CARRUSEL DE SERVICIOS ----
 const servicios = [
-  { img: "images/adminMuebles.jpg", alt: "Servicios hipotecarios" , subtitulo: "SERVICIOS", titulo: "Hipotecarios" },
-  { img: "images/asesorFiscal.jpg", alt: "administracion de inmuebles" , subtitulo: "ADMINISTRACION DE", titulo: "Inmbuebles" },
-  { img: "images/casa1.jpg", alt: "escritura propiedad" , subtitulo: "ESCRITURACION DE", titulo: "Propiedad" },
-  { img: "images/casa1.jpg", alt: "asesoria fiscal" , subtitulo: "ASESORIA", titulo: "Fiscal" },
-  { img: "images/casa1.jpg", alt: "gestion ante instituciones gubernamentales" , subtitulo: "GESTION ANTE INSTITUCIONES", titulo: "Gubernamentales" },
-  { img: "images/casa1.jpg", alt: "promocion de inmueble" , subtitulo: "PROMOCION DE", titulo: "Inmbueble" },
-  { img: "images/casa1.jpg", alt: "opiniones de valor" , subtitulo: "OPINIONES DE", titulo: "Valor" },
-  { img: "images/casa1.jpg", alt: "analisis juridico de inmuebles" , subtitulo: "ANALISIS JURIDICO DE", titulo: "Inmbuebles" },
-  { img: "images/casa1.jpg", alt: "servicios notariales" , subtitulo: "SERVICIOS", titulo: "Notariales" },
-  { img: "images/casa1.jpg", alt: "servicios de mantenimiento" , subtitulo: "SERVICIOS DE", titulo: "Mantenimiento" },
+  { img: "images/serviciosHipo.png", alt: "Servicios hipotecarios" , subtitulo: "SERVICIOS", titulo: "Hipotecarios" },
+  { img: "images/adminMuebles.JPG", alt: "administracion de inmuebles" , subtitulo: "ADMINISTRACION DE", titulo: "Inmbuebles" },
+  { img: "images/escrituraPropiedad.jpg", alt: "escritura propiedad" , subtitulo: "ESCRITURACION DE", titulo: "Propiedad" },
+  { img: "images/asesorFiscal.png", alt: "asesoria fiscal" , subtitulo: "ASESORIA", titulo: "Fiscal" },
+  { img: "images/serviciosGobierno.jpg", alt: "gestion ante instituciones gubernamentales" , subtitulo: "GESTION ANTE INSTITUCIONES", titulo: "Gubernamentales" },
+  { img: "images/promoInmueble.jpg", alt: "promocion de inmueble" , subtitulo: "PROMOCION DE", titulo: "Inmbueble" },
+  { img: "images/opinionValor.jpg", alt: "opiniones de valor" , subtitulo: "OPINIONES DE", titulo: "Valor" },
+  { img: "images/analisisJuridico.JPG", alt: "analisis juridico de inmuebles" , subtitulo: "ANALISIS JURIDICO DE", titulo: "Inmbuebles" },
+  { img: "images/servicioNotario.jpg", alt: "servicios notariales" , subtitulo: "SERVICIOS", titulo: "Notariales" },
+  { img: "images/manto.jpeg", alt: "servicios de mantenimiento" , subtitulo: "SERVICIOS DE", titulo: "Mantenimiento" },
 ];
 
 let indiceActual = 1;
