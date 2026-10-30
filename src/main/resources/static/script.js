@@ -41,8 +41,8 @@ if (lightboxEl) {
 
 // ---- CARRUSEL DE SERVICIOS ----
 const servicios = [
-  { img: "images/casa1.jpg", alt: "Servicios hipotecarios" , subtitulo: "SERVICIOS", titulo: "Hipotecarios" },
-  { img: "images/casa1.jpg", alt: "administracion de inmuebles" , subtitulo: "ADMINISTRACION DE", titulo: "Inmbuebles" },
+  { img: "images/adminMuebles.jpg", alt: "Servicios hipotecarios" , subtitulo: "SERVICIOS", titulo: "Hipotecarios" },
+  { img: "images/asesorFiscal.jpg", alt: "administracion de inmuebles" , subtitulo: "ADMINISTRACION DE", titulo: "Inmbuebles" },
   { img: "images/casa1.jpg", alt: "escritura propiedad" , subtitulo: "ESCRITURACION DE", titulo: "Propiedad" },
   { img: "images/casa1.jpg", alt: "asesoria fiscal" , subtitulo: "ASESORIA", titulo: "Fiscal" },
   { img: "images/casa1.jpg", alt: "gestion ante instituciones gubernamentales" , subtitulo: "GESTION ANTE INSTITUCIONES", titulo: "Gubernamentales" },
