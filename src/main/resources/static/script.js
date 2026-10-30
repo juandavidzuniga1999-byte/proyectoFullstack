@@ -248,11 +248,36 @@ async function cargarDetallePropiedad() {
 
     // --- datos numéricos ---
     document.getElementById('datosPropiedad').innerHTML = `
-  <div class="dato"><span class="dato-num">${p.construccion ?? '-'}</span><span class="dato-label">m² Construcción</span></div>
-  <div class="dato"><span class="dato-num">${p.terreno ?? '-'}</span><span class="dato-label">m² Terreno</span></div>
-  <div class="dato"><span class="dato-num">${p.cuarto ?? '-'}</span><span class="dato-label">Recámaras</span></div>
-  <div class="dato"><span class="dato-num">${p.banos ?? '-'}</span><span class="dato-label">Baños</span></div>
-  <div class="dato"><span class="dato-num">${p.estacionamiento ?? '-'}</span><span class="dato-label">Estacionamiento</span></div>
+  <div class="dato" title="Construcción">
+    <i class="fa-solid fa-house dato-icono" aria-hidden="true"></i>
+    <span class="dato-num">${p.construccion ?? '-'} <small>m²</small></span>
+    <span class="sr-only">Construcción</span>
+  </div>
+  <div class="dato" title="Terreno">
+    <i class="fa-solid fa-vector-square dato-icono" aria-hidden="true"></i>
+    <span class="dato-num">${p.terreno ?? '-'} <small>m²</small></span>
+    <span class="sr-only">Terreno</span>
+  </div>
+  <div class="dato" title="Recámaras">
+    <i class="fa-solid fa-bed dato-icono" aria-hidden="true"></i>
+    <span class="dato-num">${p.cuarto ?? '-'}</span>
+    <span class="sr-only">Recámaras</span>
+  </div>
+  <div class="dato" title="Baños">
+    <i class="fa-solid fa-bath dato-icono" aria-hidden="true"></i>
+    <span class="dato-num">${p.banos ?? '-'}</span>
+    <span class="sr-only">Baños</span>
+  </div>
+  <div class="dato" title="Medio baño">
+    <i class="fa-solid fa-toilet dato-icono" aria-hidden="true"></i>
+    <span class="dato-num">${p.medioBano ?? '-'}</span>
+    <span class="sr-only">Medio baño</span>
+  </div>
+  <div class="dato" title="Estacionamiento">
+    <i class="fa-solid fa-car dato-icono" aria-hidden="true"></i>
+    <span class="dato-num">${p.estacionamiento ?? '-'}</span>
+    <span class="sr-only">Estacionamiento</span>
+  </div>
   ${p.descripcion ? `
     <div class="dato-descripcion">
       <span class="dato-label">Descripción</span>
@@ -260,6 +285,7 @@ async function cargarDetallePropiedad() {
     </div>
   ` : ''}
 `;
+
   } catch (error) {
     console.error('No se pudo cargar la propiedad:', error);
     titulo.textContent = 'No se pudo cargar la propiedad';

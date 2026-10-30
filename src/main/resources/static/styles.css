@@ -980,3 +980,35 @@ padding: 80px 60px;
 .admin-miniatura img{ width:100%; height:100%; object-fit:cover; display:block; }
 .admin-miniatura span{ position:absolute; left:0; bottom:0; background:var(--naranjoso); color:var(--blanco); font-size:0.65rem; padding:2px 6px; }
 .admin-miniatura button{ position:absolute; top:2px; right:2px; width:22px; height:22px; border:none; border-radius:50%; background:rgba(0,0,0,0.75); color:var(--blanco); cursor:pointer; line-height:1; padding:0; }
+
+
+.dato{
+  background:var(--negro);
+  padding:18px 22px;
+  flex:1 1 140px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.dato-icono{
+  font-size:1.5rem;
+  color:var(--naranjoso);
+  width:28px;
+  text-align:center;
+}
+.dato-num small{
+  font-family:'Inter', sans-serif;
+  font-size:0.8rem;
+  opacity:0.7;
+}
+
+/* texto solo para lectores de pantalla (accesibilidad) */
+.sr-only{
+  position:absolute;
+  width:1px; height:1px;
+  padding:0; margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
