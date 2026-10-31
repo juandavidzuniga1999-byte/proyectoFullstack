@@ -293,3 +293,168 @@ async function cargarDetallePropiedad() {
 }
 
 cargarDetallePropiedad();
+
+// ---- GALERÍA DINÁMICA DE SERVICIOS (stone.html, etc.) ----
+async function cargarGaleriaSeccion() {
+  const grid = document.getElementById('galeriaDinamica');
+  if (!grid) return; // esta página no tiene galería dinámica
+
+  const seccion = grid.dataset.seccion;
+
+  try {
+    const respuesta = await fetch(`/api/galeria/${seccion}`);
+    if (!respuesta.ok) throw new Error('Respuesta no OK: ' + respuesta.status);
+    const fotos = await respuesta.json();
+
+    grid.innerHTML = '';
+
+    if (!fotos.length) {
+      grid.innerHTML = '<p class="propiedades-estado">Aún no hay fotos en esta galería.</p>';
+      return;
+    }
+
+    fotos.forEach((f, i) => {
+      const item = document.createElement('div');
+      item.className = 'galeria-item';
+
+      const img = document.createElement('img');
+      img.src = f.url;
+      img.alt = `Proyecto ${i + 1}`;
+      img.onclick = () => abrirLightbox(img);
+
+      item.appendChild(img);
+      grid.appendChild(item);
+    });
+  } catch (error) {
+    console.error('No se pudo cargar la galería:', error);
+    grid.innerHTML = '<p class="propiedades-estado">No se pudieron cargar las fotos.</p>';
+  }
+}
+
+cargarGaleriaSeccion();
+
+// ---- GALERÍAS DE SERVICIOS ----
+async function cargarGaleriaAdmin() {
+  const cont = document.getElementById('galeriaAdminLista');
+  const select = document.getElementById('galeriaSeccion');
+  if (!cont || !select) return;
+
+  cont.innerHTML = '';
+
+  try {
+    const respuesta = await fetch(`/api/galeria/${select.value}`);
+    const fotos = await respuesta.json();
+
+    if (!fotos.length) {
+      cont.innerHTML = '<p>No hay fotos en esta sección todavía.</p>';
+      return;
+    }
+
+    fotos.forEach((f) => {
+      const item = document.createElement('div');
+      item.className = 'admin-miniatura';
+
+      const img = document.createElement('img');
+      img.src = f.url;
+
+      const quitar = document.createElement('button');
+      quitar.type = 'button';
+      quitar.textContent = '×';
+      quitar.title = 'Quitar foto';
+      quitar.addEventListener('click', () => borrarFotoGaleria(f.id));
+
+      item.appendChild(img);
+      item.appendChild(quitar);
+      cont.appendChild(item);
+    });
+  } catch (err) {
+    console.error(err);
+    cont.innerHTML = '<p>No se pudo cargar la galería.</p>';
+  }
+}
+
+async function borrarFotoGaleria(id) {
+  if (!confirm('¿Quitar esta foto de la galería?')) return;
+
+  try {
+    const respuesta = await fetch(`/api/galeria/foto/${id}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': 'Bearer ' + getToken() }
+    });
+
+    if (respuesta.status === 401 || respuesta.status === 403) {
+      alert('Tu sesión expiró, vuelve a iniciar sesión.');
+      limpiarToken();
+      mostrarPanel(false);
+      return;
+    }
+    if (!respuesta.ok && respuesta.status !== 204) {
+      alert('No se pudo quitar la foto.');
+      return;
+    }
+    cargarGaleriaAdmin();
+  } catch (err) {
+    console.error(err);
+    alert('Error de conexión. Intenta de nuevo.');
+  }
+}
+
+const galeriaSelect = document.getElementById('galeriaSeccion');
+if (galeriaSelect) {
+  galeriaSelect.addEventListener('change', cargarGaleriaAdmin);
+}
+
+const galeriaInput = document.getElementById('galeriaInput');
+if (galeriaInput) {
+  galeriaInput.addEventListener('change', async () => {
+    const archivos = Array.from(galeriaInput.files);
+    const estadoEl = document.getElementById('galeriaEstado');
+    const seccion = galeriaSelect.value;
+    if (!archivos.length) return;
+
+    let fallos = 0;
+    for (let i = 0; i < archivos.length; i++) {
+      estadoEl.textContent = `Subiendo ${i + 1} de ${archivos.length}...`;
+
+      try {
+        // 1) sube el archivo
+        const datosForm = new FormData();
+        datosForm.append('archivo', archivos[i]);
+        const subida = await fetch('/api/imagenes/upload', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + getToken() },
+          body: datosForm
+        });
+
+        if (subida.status === 401 || subida.status === 403) {
+          estadoEl.textContent = 'Tu sesión expiró, vuelve a iniciar sesión.';
+          limpiarToken();
+          mostrarPanel(false);
+          return;
+        }
+        const datosSubida = await subida.json().catch(() => ({}));
+        if (!subida.ok) { fallos++; continue; }
+
+        // 2) registra la foto en la galería de la sección
+        const registro = await fetch(`/api/galeria/${seccion}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getToken()
+          },
+          body: JSON.stringify({ url: datosSubida.url })
+        });
+        if (!registro.ok) fallos++;
+      } catch (err) {
+        console.error(err);
+        fallos++;
+      }
+    }
+
+    galeriaInput.value = '';
+    estadoEl.textContent = fallos
+      ? `Listo, pero ${fallos} foto(s) no se pudieron subir.`
+      : 'Fotos agregadas ✓';
+    cargarGaleriaAdmin();
+  });
+}

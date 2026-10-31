@@ -109,6 +109,27 @@
                 <p>Cargando...</p>
             </div>
         </div>
+
+            <div class="admin-card">
+        <h2>Galerías de servicios</h2>
+        <p class="admin-hint">Agrega o quita fotos de la página de cada servicio.</p>
+
+        <label>Sección
+            <select id="galeriaSeccion">
+                <option value="stone">Stone</option>
+                <option value="boulevard">Boulevard Stonewall</option>
+                <option value="greengarden">Green Garden</option>
+                <option value="deck">Deck</option>
+            </select>
+        </label>
+
+        <label style="margin-top:16px;">Agregar fotos (puedes elegir varias)
+            <input type="file" id="galeriaInput" multiple accept="image/jpeg,image/png,image/webp,image/gif">
+        </label>
+        <span id="galeriaEstado" class="admin-hint" style="margin:6px 0 0;"></span>
+
+        <div id="galeriaAdminLista" class="admin-miniaturas"></div>
+        </div>
     </div>
 
 </section>
