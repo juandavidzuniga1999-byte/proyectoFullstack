@@ -96,12 +96,16 @@
                     </label>
                 </div>
                 <label class="admin-full">Descripción
-                    <textarea name="descripcion" rows="3"></textarea>
-                </label>
-                <button type="submit">Guardar propiedad</button>
-                <p id="formError" class="admin-error"></p>
-            </form>
+            <textarea name="descripcion" rows="3"></textarea>
+        </label>
+
+        <div class="admin-acciones">
+            <button type="submit" id="formSubmitBtn">Guardar propiedad</button>
+            <button type="button" id="cancelarEdicionBtn" class="admin-btn-secundario" style="display:none;">Cancelar edición</button>
         </div>
+        <p id="formError" class="admin-error"></p>
+    </form>
+</div>
 
         <div class="admin-card">
             <h2>Propiedades existentes</h2>

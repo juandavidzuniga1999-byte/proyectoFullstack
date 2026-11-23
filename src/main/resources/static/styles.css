@@ -1026,3 +1026,24 @@ padding: 80px 60px;
   font-family:'Inter', sans-serif;
   font-size:0.95rem;
 }
+
+.admin-acciones{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+
+/* el selector "#formPropiedad button" pintaba todos los botones de naranja;
+   esto deja el de cancelar con su estilo secundario */
+#formPropiedad .admin-btn-secundario{
+  background:none;
+  border:1px solid rgba(255,255,255,0.3);
+}
+
+.admin-fila-botones{ display:flex; gap:8px; flex-shrink:0; }
+.admin-btn-editar{
+  background:none;
+  color:var(--naranjoso);
+  border:1px solid var(--naranjoso);
+  border-radius:4px;
+  padding:6px 14px;
+  font-size:0.85rem;
+  cursor:pointer;
+}
+.admin-btn-editar:hover{ background:var(--naranjoso); color:var(--negro); }

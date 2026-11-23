@@ -147,9 +147,54 @@ if (inputImagen) {
   });
 }
 
-// ---- AGREGAR PROPIEDAD ----
+// ---- AGREGAR / EDITAR PROPIEDAD ----
+let editandoId = null;        // null = modo "agregar"; un número = editando esa propiedad
+let propiedadesCache = [];    // última lista cargada, para llenar el formulario al editar
+
 const formPropiedad = document.getElementById('formPropiedad');
+
+function salirModoEdicion() {
+  editandoId = null;
+  formPropiedad.reset();
+  imagenesSubidas = [];
+  pintarMiniaturas();
+  document.getElementById('imagenEstado').textContent = '';
+  document.getElementById('formTitulo').textContent = 'Agregar propiedad';
+  document.getElementById('formSubmitBtn').textContent = 'Guardar propiedad';
+  document.getElementById('cancelarEdicionBtn').style.display = 'none';
+}
+
+function editarPropiedad(id) {
+  const p = propiedadesCache.find((x) => x.id === Number(id));
+  if (!p) return;
+
+  editandoId = p.id;
+
+  const campos = ['titulo', 'tipoPropiedad', 'condicion', 'ubicacion', 'precio',
+                  'construccion', 'terreno', 'cuarto', 'banos', 'medioBano',
+                  'estacionamiento', 'descripcion'];
+  campos.forEach((c) => {
+    const el = formPropiedad.elements[c];
+    if (el) el.value = p[c] ?? '';
+  });
+
+  // fotos actuales de la propiedad (se pueden quitar con la × o agregar más)
+  imagenesSubidas = (p.imagenes && p.imagenes.length)
+    ? [...p.imagenes]
+    : (p.imagenUrl ? [p.imagenUrl] : []);
+  pintarMiniaturas();
+
+  document.getElementById('formTitulo').textContent = 'Editar propiedad';
+  document.getElementById('formSubmitBtn').textContent = 'Guardar cambios';
+  document.getElementById('cancelarEdicionBtn').style.display = 'inline-block';
+  document.getElementById('formError').textContent = '';
+
+  document.getElementById('formTitulo').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 if (formPropiedad) {
+  document.getElementById('cancelarEdicionBtn').addEventListener('click', salirModoEdicion);
+
   formPropiedad.addEventListener('submit', async (e) => {
     e.preventDefault();
     const errorEl = document.getElementById('formError');
@@ -173,9 +218,13 @@ if (formPropiedad) {
       estacionamiento: Number(datosForm.get('estacionamiento')) || 0,
     };
 
+    const esEdicion = editandoId !== null;
+    const url = esEdicion ? `/api/propiedades/${editandoId}` : '/api/propiedades';
+    const metodo = esEdicion ? 'PUT' : 'POST';
+
     try {
-      const respuesta = await fetch('/api/propiedades', {
-        method: 'POST',
+      const respuesta = await fetch(url, {
+        method: metodo,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + getToken()
@@ -195,10 +244,7 @@ if (formPropiedad) {
         return;
       }
 
-      formPropiedad.reset();
-      imagenesSubidas = [];
-      pintarMiniaturas();
-      document.getElementById('imagenEstado').textContent = '';
+      salirModoEdicion();
       cargarPropiedadesAdmin();
     } catch (err) {
       console.error(err);
@@ -207,7 +253,7 @@ if (formPropiedad) {
   });
 }
 
-// ---- LISTAR + BORRAR ----
+// ---- LISTAR + EDITAR + BORRAR ----
 function formatearPrecioAdmin(valor) {
   return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(valor);
 }
@@ -219,6 +265,7 @@ async function cargarPropiedadesAdmin() {
   try {
     const respuesta = await fetch('/api/propiedades');
     const propiedades = await respuesta.json();
+    propiedadesCache = propiedades;
 
     if (!propiedades.length) {
       contenedor.innerHTML = '<p>No hay propiedades cargadas todavía.</p>';
@@ -234,11 +281,17 @@ async function cargarPropiedadesAdmin() {
           <strong>${p.titulo || p.tipoPropiedad || 'Propiedad'}</strong>
           <span class="admin-fila-detalle">${p.ubicacion || ''} · ${formatearPrecioAdmin(p.precio || 0)}</span>
         </div>
-        <button class="admin-btn-borrar" data-id="${p.id}">Eliminar</button>
+        <div class="admin-fila-botones">
+          <button class="admin-btn-editar" data-id="${p.id}">Editar</button>
+          <button class="admin-btn-borrar" data-id="${p.id}">Eliminar</button>
+        </div>
       `;
       contenedor.appendChild(fila);
     });
 
+    contenedor.querySelectorAll('.admin-btn-editar').forEach((btn) => {
+      btn.addEventListener('click', () => editarPropiedad(btn.dataset.id));
+    });
     contenedor.querySelectorAll('.admin-btn-borrar').forEach((btn) => {
       btn.addEventListener('click', () => borrarPropiedad(btn.dataset.id));
     });
@@ -268,6 +321,9 @@ async function borrarPropiedad(id) {
       alert('No se pudo eliminar la propiedad.');
       return;
     }
+
+    // si estabas editando justo la que borraste, limpia el formulario
+    if (editandoId === Number(id)) salirModoEdicion();
 
     cargarPropiedadesAdmin();
   } catch (err) {
