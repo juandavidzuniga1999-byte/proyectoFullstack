@@ -26,7 +26,7 @@ import com.guardado.proyecto.repository.galeriaFotoRepository;
 @RequestMapping("/api/galeria")
 public class galeriaController {
 
-    private static final List<String> SECCIONES_VALIDAS = List.of("stone", "boulevard", "greengarden", "deck");
+    private static final List<String> SECCIONES_VALIDAS = List.of("stone", "boulevardStone", "greengarden", "deck");
 
     @Autowired
     private galeriaFotoRepository repo;
